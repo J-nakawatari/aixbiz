@@ -1,12 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
+const notoSansJP = Noto_Sans_JP({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700', '900'],
+  variable: '--font-noto-sans-jp'
+})
 
 export const metadata: Metadata = {
-  title: 'AI導入ナビゲーター - 中小企業向けAI活用診断',
-  description: '中小企業向けに、ChatGPTなどの生成AIを活用した業務改善・効率化の提案を行う無料診断サービス',
+  title: 'AI導入ナビゲーター | 中小企業のためのAI業務改善診断サービス',
+  description: '高額なシステムや複雑なAI導入は不要。ChatGPTなど、すぐに使えるAIを活かして御社の業務課題に合わせた効率化プランを診断・ご提案します。',
 }
 
 export default function RootLayout({
@@ -15,8 +20,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ja">
-      <body className={inter.className}>{children}</body>
+    <html lang="ja" className={`${notoSansJP.variable}`}>
+      <body className={`${notoSansJP.className} antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }
