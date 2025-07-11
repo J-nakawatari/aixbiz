@@ -24,6 +24,21 @@ cd backend && npm run build && cd ..
 
 # PM2でアプリケーション再起動
 echo "Restarting applications..."
-pm2 restart aixbiz-frontend aixbiz-backend
+
+# フロントエンドの起動/再起動
+if pm2 list | grep -q "aixbiz-frontend"; then
+    pm2 restart aixbiz-frontend
+else
+    cd frontend && pm2 start npm --name "aixbiz-frontend" -- start && cd ..
+fi
+
+# バックエンドの起動/再起動
+if pm2 list | grep -q "aixbiz-backend"; then
+    pm2 restart aixbiz-backend
+else
+    cd backend && pm2 start npm --name "aixbiz-backend" -- start && cd ..
+fi
+
+pm2 save
 
 echo "Build and restart completed!"
