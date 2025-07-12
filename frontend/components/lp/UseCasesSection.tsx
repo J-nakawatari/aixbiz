@@ -1,4 +1,5 @@
 import { ImageWithFallback } from './ImageWithFallback';
+import Image from 'next/image';
 
 export default function UseCasesSection() {
   const useCases = [
@@ -52,9 +53,11 @@ export default function UseCasesSection() {
             return (
               <div key={index} className="bg-slate-50 p-6 rounded-xl hover:shadow-lg transition-shadow duration-300 border border-slate-100">
                 <div className="text-center mb-4">
-                  <ImageWithFallback
+                  <Image
                     src={useCase.placeholderImage}
                     alt={`${useCase.industry}アイコン`}
+                    width={64}
+                    height={64}
                     className="w-16 h-16 mx-auto mb-3 object-cover rounded-lg"
                   />
                   <h3 className="text-xl text-indigo-500 font-bold text-[24px]">{useCase.industry}</h3>
