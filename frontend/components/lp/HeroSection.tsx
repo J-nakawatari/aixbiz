@@ -69,7 +69,7 @@ export default function HeroSection() {
             <div className="text-2xl text-gray-800 leading-8 w-full">
               <p className="text-[24px]">
                 AI導入ナビゲーターが<br />
-                "いま必要な活用法"を無料でご提案
+                <span className="text-green-600">"いま必要な活用法"</span>を無料でご提案
               </p>
             </div>
 
@@ -78,7 +78,7 @@ export default function HeroSection() {
               <p className="text-[16px]">
                 高額なシステムや複雑なAI導入は不要。
                 <br />
-                ChatGPTなど、すぐに使えるAIを活かして
+                すぐに使えるAIを活かして
                 <br />
                 御社の業務課題に合わせた効率化プランを診断・ご提案します。
               </p>
