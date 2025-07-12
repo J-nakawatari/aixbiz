@@ -30,7 +30,7 @@ export default function DiagnosticSection() {
           <div className="space-y-4 mb-8">
             <div>
               <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">業種</label>
-              <select className="w-full p-3 border border-gray-300 rounded-lg bg-white text-[16px]">
+              <select className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]">
                 <option>選択してください</option>
                 <option>製造業</option>
                 <option>士業</option>
@@ -43,7 +43,7 @@ export default function DiagnosticSection() {
             
             <div>
               <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">部門・業務</label>
-              <select className="w-full p-3 border border-gray-300 rounded-lg bg-white text-[16px]">
+              <select className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]">
                 <option>選択してください</option>
                 <option>営業・マーケティング</option>
                 <option>経理・総務</option>

@@ -50,7 +50,7 @@ export default function CTASection() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold text-left">業種</label>
-                <select className="w-full p-3 border border-gray-300 rounded-lg bg-white">
+                <select className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white">
                   <option>選択してください</option>
                   <option>製造業</option>
                   <option>士業</option>
@@ -63,7 +63,7 @@ export default function CTASection() {
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold text-left">従業員数</label>
-                <select className="w-full p-3 border border-gray-300 rounded-lg bg-white">
+                <select className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white">
                   <option>選択してください</option>
                   <option>1-5名</option>
                   <option>6-20名</option>
