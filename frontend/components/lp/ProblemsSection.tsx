@@ -36,7 +36,7 @@ export default function ProblemsSection() {
               <div className="flex items-start">
                 <ImageWithFallback
                   src="/images/finger-icon.png"
-                  alt="指アイコン"
+                  alt="お悩みポイント"
                   width={48}
                   height={48}
                   className="w-12 h-12 mr-6 mt-1 flex-shrink-0 object-contain"

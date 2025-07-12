@@ -1,0 +1,12 @@
+# robots.txt for https://aixbiz.jp
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Sitemap
+Sitemap: https://aixbiz.jp/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
