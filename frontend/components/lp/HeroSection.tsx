@@ -42,7 +42,7 @@ function ArrowIcon() {
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 h-[600px] overflow-hidden">
+    <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 h-[600px] overflow-hidden mt-20">
       {/* メインコンテンツコンテナ */}
       <div className="flex flex-col items-center justify-start h-full relative">
         {/* 波の装飾 */}

@@ -1,3 +1,4 @@
+import Header from "@/components/lp/Header";
 import HeroSection from "@/components/lp/HeroSection";
 import ProblemsSection from "@/components/lp/ProblemsSection";
 import FeaturesSection from "@/components/lp/FeaturesSection";
@@ -10,6 +11,7 @@ import Footer from "@/components/lp/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <Header />
       <HeroSection />
       <ProblemsSection />
       <FeaturesSection />
