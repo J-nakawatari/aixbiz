@@ -19,7 +19,7 @@ export default function FeaturesSection() {
     },
     {
       icon: Handshake,
-      title: "開発やツール販売は行わず、現場視点で提案",
+      title: "開発やツール販売は行わず、現場視点で最適な提案",
       description: "ベンダーのような高額な開発費は不要。中立的な立場から、最適なAI活用法をアドバイスします。"
     }
   ];
