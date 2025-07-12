@@ -3,11 +3,11 @@ import { ImageWithFallback } from './ImageWithFallback';
 export default function ProblemsSection() {
   const problems = [
     {
-      title: "AIを導入したいが、何から始めればいいかわからない",
+      title: "AIを導入したいが、何から始めればいいか不明",
       description: "最初の一歩が分からず、貴重な時間とリソースを無駄にしていませんか？"
     },
     {
-      title: "ChatGPTを試したけど業務活用に落とし込めていない", 
+      title: "ChatGPTを試したけど業務活用に落とし込めない", 
       description: "AIツールを使ってみたものの、本当の業務効率化につながっていませんか？"
     },
     {
@@ -15,7 +15,7 @@ export default function ProblemsSection() {
       description: "導入したAIツールが宝の持ち腐れになっていませんか？"
     },
     {
-      title: "ベンダーに頼むほどの規模じゃないけど効率化したい",
+      title: "ベンダーに頼むほどの規模じゃないが効率化したい",
       description: "中小企業でも手軽に始められるAI活用法をお探しですか？"
     }
   ];
