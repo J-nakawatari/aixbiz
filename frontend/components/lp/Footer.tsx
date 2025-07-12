@@ -93,7 +93,7 @@ export default function Footer() {
         {/* Bottom section */}
         <div className="border-t border-slate-800 pt-8 text-center">
           <p className="text-[14px] text-slate-400">
-            © 2023 aixbiz. All rights reserved.
+            © 2025 aixbiz. All rights reserved.
           </p>
         </div>
       </div>
