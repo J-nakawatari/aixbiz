@@ -75,7 +75,7 @@ export default function CTASection() {
             </div>
             
             <div>
-              <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold text-left">現在の業務課題（複数選択可）</label>
+              <label className="block text-gray-700 mb-2 text-[16px] font-bold text-left">現在の業務課題（複数選択可）</label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
                 {[
                   "業務効率化が必要",
