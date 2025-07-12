@@ -86,8 +86,8 @@ export default function CTASection() {
                   "書類・文書作成の効率化"
                 ].map((task, index) => (
                   <label key={index} className="flex items-center">
-                    <input type="checkbox" className="mr-3 text-[16px]" />
-                    <span className="text-sm text-gray-700 text-[16px]">{task}</span>
+                    <input type="checkbox" className="mr-3 w-4 h-4" />
+                    <span className="text-gray-700 text-[16px]">{task}</span>
                   </label>
                 ))}
               </div>
