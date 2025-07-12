@@ -85,7 +85,7 @@ export default function HeroSection() {
             </div>
 
             {/* CTAボタン */}
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 sm:px-8 py-3 rounded-[8px] text-base sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2.5 w-full sm:w-fit mx-auto lg:mx-0">
+            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-8 rounded-[8px] text-[24px] shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2.5 w-full sm:w-fit mx-auto lg:mx-0">
               無料で診断を受ける
               <ArrowIcon />
             </Button>
