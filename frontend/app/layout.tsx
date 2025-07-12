@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin'] })
 const notoSansJP = Noto_Sans_JP({ 
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${notoSansJP.variable}`}>
       <body className={`${notoSansJP.className} antialiased`}>
+        <GoogleAnalytics />
         {children}
       </body>
     </html>
