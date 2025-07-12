@@ -39,7 +39,7 @@ export default function UseCasesSection() {
     <section className="py-16 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl mb-4 text-gray-800 text-[32px] font-bold">
+          <h2 className="text-3xl mb-4 text-gray-800 text-[32px] font-bold leading-[48px]">
             さまざまな業種・部門で<br />
             <span className="text-green-600">活用が広がっています</span>
           </h2>

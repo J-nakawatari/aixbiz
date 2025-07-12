@@ -5,7 +5,7 @@ export default function CTASection() {
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl mb-6 text-[32px] font-bold">
+        <h2 className="text-3xl md:text-4xl mb-6 text-[32px] font-bold leading-[48px]">
           まずは無料診断から。<br />
           <span className="text-indigo-100">3分の入力</span>で、御社に合ったAI活用法をご提案！
         </h2>
