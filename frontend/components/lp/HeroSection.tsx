@@ -49,7 +49,7 @@ export default function HeroSection() {
         <WaveDecoration />
 
         {/* メインコンテンツ */}
-        <div className="flex flex-row gap-[80px] h-[600px] items-center justify-start px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20">
+        <div className="flex flex-row gap-[0px] h-[600px] items-center justify-start px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20">
           {/* 左側：テキストコンテンツ */}
           <div className="flex flex-col gap-8 w-[600px] flex-shrink-0 m-[0px]">
             {/* メインタイトル */}
