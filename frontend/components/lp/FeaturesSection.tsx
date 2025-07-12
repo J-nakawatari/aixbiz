@@ -25,7 +25,7 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
+    <section id="features" className="py-16 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl mb-4 text-gray-800 text-[32px] font-bold leading-[48px]">

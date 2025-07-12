@@ -36,7 +36,7 @@ export default function UseCasesSection() {
   ];
 
   return (
-    <section className="py-16 px-4 bg-white">
+    <section id="usecases" className="py-16 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl mb-4 text-gray-800 text-[32px] font-bold leading-[48px]">

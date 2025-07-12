@@ -21,7 +21,7 @@ export default function ProblemsSection() {
   ];
 
   return (
-    <section className="py-16 px-4 bg-white">
+    <section id="problems" className="py-16 px-4 bg-white">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl mb-4 text-gray-800 font-bold text-[32px]">
           こんなお悩みはありませんか？

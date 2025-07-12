@@ -17,6 +17,12 @@ export default function Header() {
           {/* ナビゲーション */}
           <nav className="hidden md:flex items-center gap-8">
             <Link 
+              href="#problems" 
+              className="text-gray-700 hover:text-indigo-600 transition-colors text-[16px]"
+            >
+              お悩み
+            </Link>
+            <Link 
               href="#features" 
               className="text-gray-700 hover:text-indigo-600 transition-colors text-[16px]"
             >
@@ -32,7 +38,7 @@ export default function Header() {
               href="#diagnosis" 
               className="text-gray-700 hover:text-indigo-600 transition-colors text-[16px]"
             >
-              無料診断
+              簡易診断
             </Link>
             <Link 
               href="#faq" 
@@ -43,11 +49,13 @@ export default function Header() {
           </nav>
 
           {/* CTA ボタン */}
-          <Button 
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full text-[16px]"
-          >
-            無料診断を受ける
-          </Button>
+          <Link href="#cta">
+            <Button 
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full text-[16px]"
+            >
+              無料診断を受ける
+            </Button>
+          </Link>
         </div>
       </div>
     </header>
