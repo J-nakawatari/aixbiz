@@ -29,7 +29,7 @@ export default function CTASection() {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold text-left">お名前</label>
+                <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold text-left">ご担当者名</label>
                 <input 
                   type="text" 
                   className="w-full p-3 border border-gray-300 rounded-lg text-[16px]"
