@@ -3,12 +3,16 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import Logo from "./Logo";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
-      <div className="max-w-7xl mx-auto px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* ロゴ */}
           <Link href="/" className="flex items-center">
             <Logo />

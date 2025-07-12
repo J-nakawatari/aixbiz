@@ -12,7 +12,7 @@ const svgPaths = {
 
 function WaveDecoration() {
   return (
-    <div className="absolute h-[166px] left-0 top-[435px] w-full z-1">
+    <div className="absolute h-[100px] sm:h-[166px] left-0 bottom-0 w-full z-1">
       <svg
         className="block size-full"
         fill="none"
@@ -42,57 +42,57 @@ function ArrowIcon() {
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 h-[600px] overflow-hidden mt-20">
+    <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 min-h-[600px] lg:h-[600px] overflow-hidden mt-16 sm:mt-20">
       {/* メインコンテンツコンテナ */}
       <div className="flex flex-col items-center justify-start h-full relative">
         {/* 波の装飾 */}
         <WaveDecoration />
 
         {/* メインコンテンツ */}
-        <div className="flex flex-row gap-[0px] h-[600px] items-center justify-start px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-[0px] items-center justify-center lg:justify-start px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20 py-12 lg:py-0">
           {/* 左側：テキストコンテンツ */}
-          <div className="flex flex-col gap-8 w-[600px] flex-shrink-0 m-[0px]">
+          <div className="flex flex-col gap-6 lg:gap-8 w-full lg:w-[600px] flex-shrink-0 text-center lg:text-left">
             {/* メインタイトル */}
             <div>
-              <h1 className="text-5xl leading-[72px] text-left">
-                <span className="text-gray-900 font-bold text-[64px] whitespace-nowrap">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-[72px]">
+                <span className="text-gray-900 font-bold text-[36px] sm:text-[48px] lg:text-[64px] block lg:inline lg:whitespace-nowrap">
                   中小企業のための
                 </span>
-                <br />
-                <span className="text-indigo-600 font-bold text-[40px]">
+                <br className="hidden lg:block" />
+                <span className="text-indigo-600 font-bold text-[28px] sm:text-[32px] lg:text-[40px]">
                   AI業務改善診断
                 </span>
               </h1>
             </div>
 
             {/* サブタイトル */}
-            <div className="text-2xl text-gray-800 leading-8 w-full">
-              <p className="text-[24px]">
+            <div className="text-xl sm:text-2xl text-gray-800 leading-relaxed w-full">
+              <p className="text-[18px] sm:text-[20px] lg:text-[24px]">
                 AI導入ナビゲーターが<br />
                 <span className="text-green-600">"いま必要な活用法"</span>を無料でご提案
               </p>
             </div>
 
             {/* 説明文 */}
-            <div className="text-lg text-gray-700 leading-7 w-full">
-              <p className="text-[16px]">
+            <div className="text-base sm:text-lg text-gray-700 leading-relaxed w-full">
+              <p className="text-[14px] sm:text-[16px]">
                 高額なシステムや複雑なAI導入は不要。
-                <br />
+                <br className="sm:hidden" />
                 すぐに使えるAIを活かして
-                <br />
+                <br className="sm:hidden" />
                 御社の業務課題に合わせた効率化プランを診断・ご提案します。
               </p>
             </div>
 
             {/* CTAボタン */}
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-[8px] text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2.5 w-fit px-[28px] py-[24px]">
+            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 sm:px-8 py-4 sm:py-6 rounded-[8px] text-base sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2.5 w-full sm:w-fit mx-auto lg:mx-0">
               無料で診断を受ける
               <ArrowIcon />
             </Button>
           </div>
 
           {/* 右側：画像 */}
-          <div className="w-[624px] h-[624px] flex-shrink-0">
+          <div className="w-full lg:w-[624px] h-[300px] sm:h-[400px] lg:h-[624px] flex-shrink-0 mt-8 lg:mt-0">
             <ImageWithFallback
               src="/images/hero-dashu.png"
               alt="AI業務改善診断のイメージ - 女性がタブレットとデスクトップを使用する様子"
