@@ -32,7 +32,7 @@ export default function FeaturesSection() {
             AI導入の「はじめの一歩」を<br />
             <span className="text-green-600">中立の立場</span>からご提案します
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto text-[16px]">
+          <p className="text-lg text-gray-600 max-w-4xl mx-auto text-[16px]">
             システム開発やツール販売ではなく、御社の業務に合わせた実践的なAI活用方法をご提案します
           </p>
         </div>
