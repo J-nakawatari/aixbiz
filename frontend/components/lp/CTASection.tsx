@@ -100,10 +100,6 @@ export default function CTASection() {
             >
               無料診断を受ける
             </Button>
-            
-            <p className="text-xs text-gray-500 text-center text-[16px]">
-              個人情報は診断結果の送付およびフォローアップにのみ使用します。
-            </p>
           </form>
         </Card>
         
