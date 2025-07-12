@@ -68,7 +68,8 @@ export default function HeroSection() {
             {/* サブタイトル */}
             <div className="text-2xl text-gray-800 leading-8 w-full">
               <p className="text-[24px]">
-                AI導入ナビゲーターが"いま必要な活用法"を無料でご提案
+                AI導入ナビゲーターが<br />
+                "いま必要な活用法"を無料でご提案
               </p>
             </div>
 
