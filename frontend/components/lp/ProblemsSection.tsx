@@ -42,7 +42,7 @@ export default function ProblemsSection() {
                   className="w-12 h-12 mr-6 mt-1 flex-shrink-0 object-contain"
                 />
                 <div className="text-left">
-                  <h3 className="text-lg mb-3 text-gray-800 leading-relaxed">{problem.title}</h3>
+                  <h3 className="text-lg mb-3 text-gray-800 leading-relaxed font-bold">{problem.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{problem.description}</p>
                 </div>
               </div>
