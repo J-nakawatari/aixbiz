@@ -49,13 +49,13 @@ export default function HeroSection() {
         <WaveDecoration />
 
         {/* メインコンテンツ */}
-        <div className="flex flex-row gap-[130px] h-[600px] items-center justify-start px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20">
+        <div className="flex flex-row gap-[80px] h-[600px] items-center justify-start px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20">
           {/* 左側：テキストコンテンツ */}
-          <div className="flex flex-col gap-8 w-[492px] flex-shrink-0 m-[0px]">
+          <div className="flex flex-col gap-8 w-[600px] flex-shrink-0 m-[0px]">
             {/* メインタイトル */}
             <div>
-              <h1 className="text-5xl leading-[56px] text-left">
-                <span className="text-gray-900 font-bold text-[64px]">
+              <h1 className="text-5xl leading-[72px] text-left">
+                <span className="text-gray-900 font-bold text-[64px] whitespace-nowrap">
                   中小企業のための
                 </span>
                 <br />
@@ -66,7 +66,7 @@ export default function HeroSection() {
             </div>
 
             {/* サブタイトル */}
-            <div className="text-2xl text-gray-800 leading-8 w-[476px]">
+            <div className="text-2xl text-gray-800 leading-8 w-full">
               <p className="text-[24px]">
                 AI導入ナビゲーターが"いま必要な活用法"を無料でご提案
               </p>
