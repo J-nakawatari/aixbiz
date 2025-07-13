@@ -28,8 +28,8 @@ configureSecurityMiddleware(app);
 app.use(globalRateLimiter);
 
 // リクエストサイズ制限
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ limit: '10kb', extended: true }));
+app.use(express.json({ limit: '10mb' })); // PDF生成のため増加
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // CORS設定
 app.use(cors({

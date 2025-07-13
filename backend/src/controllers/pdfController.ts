@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { generatePDF } from '../services/pdfService';
+import { getReport } from '../services/reportStorage';
 import rateLimit from 'express-rate-limit';
 
 // PDF生成用のレート制限（より厳格）
@@ -13,16 +14,9 @@ export const pdfRateLimiter = rateLimit({
 
 export const generateReportPDF = async (req: Request, res: Response) => {
   try {
-    const { html, reportId } = req.body;
+    const { reportId } = req.body;
     
     // バリデーション
-    if (!html || typeof html !== 'string') {
-      return res.status(400).json({
-        success: false,
-        error: 'HTMLデータが必要です'
-      });
-    }
-    
     if (!reportId || typeof reportId !== 'string') {
       return res.status(400).json({
         success: false,
@@ -30,18 +24,18 @@ export const generateReportPDF = async (req: Request, res: Response) => {
       });
     }
     
-    // HTMLサイズ制限（5MB）
-    const htmlSize = Buffer.byteLength(html, 'utf8');
-    if (htmlSize > 5 * 1024 * 1024) {
-      return res.status(400).json({
+    // 保存されたレポートを取得
+    const storedReport = getReport(reportId);
+    if (!storedReport) {
+      return res.status(404).json({
         success: false,
-        error: 'HTMLデータが大きすぎます'
+        error: 'レポートが見つかりません。有効期限が切れた可能性があります。'
       });
     }
     
     // PDF生成
     const pdfBuffer = await generatePDF({
-      html,
+      html: storedReport.html,
       reportId
     });
     

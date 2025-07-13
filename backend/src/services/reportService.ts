@@ -189,14 +189,13 @@ export function generateHTMLReport(data: ReportData): string {
                 const reportIdMatch = htmlContent.match(/レポートID: (.*?)</);
                 const reportId = reportIdMatch ? reportIdMatch[1] : 'report';
                 
-                // PDF生成APIを呼び出し
+                // PDF生成APIを呼び出し（reportIdのみ送信）
                 const response = await fetch('/api/pdf/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        html: htmlContent,
                         reportId: reportId
                     })
                 });

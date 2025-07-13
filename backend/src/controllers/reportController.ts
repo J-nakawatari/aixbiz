@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { generateAIReport } from '../services/openaiService';
 import { generateHTMLReport } from '../services/reportService';
+import { storeReport } from '../services/reportStorage';
 
 export const generateReport = async (req: Request, res: Response) => {
   try {
@@ -24,6 +25,9 @@ export const generateReport = async (req: Request, res: Response) => {
 
     // HTMLレポートを生成
     const htmlReport = generateHTMLReport(reportData);
+
+    // レポートを保存
+    storeReport(reportData.reportId, reportData, htmlReport);
 
     // レスポンスとして返す
     res.json({
