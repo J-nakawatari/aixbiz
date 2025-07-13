@@ -43,12 +43,6 @@ function ArrowIcon() {
 export default function HeroSection() {
   return (
     <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 min-h-[600px] lg:h-[600px] overflow-hidden mt-16 sm:mt-20">
-      {/* 背景画像 */}
-      <div 
-        className="absolute inset-0 bg-no-repeat bg-right bg-contain"
-        style={{ backgroundImage: "url('/images/hero-img01.png')" }}
-      />
-      
       {/* メインコンテンツコンテナ */}
       <div className="flex flex-col items-center justify-start h-full relative">
         {/* 波の装飾 */}
@@ -56,6 +50,11 @@ export default function HeroSection() {
 
         {/* メインコンテンツ */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-[0px] items-center justify-center lg:justify-start px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20 py-12 lg:py-0">
+          {/* 背景画像をコンテンツエリア内に配置 */}
+          <div 
+            className="absolute inset-0 bg-no-repeat bg-right bg-contain pointer-events-none"
+            style={{ backgroundImage: "url('/images/hero-img01.png')" }}
+          />
           {/* 左側：テキストコンテンツ */}
           <div className="flex flex-col gap-6 lg:gap-8 w-full lg:w-[600px] flex-shrink-0 text-center lg:text-left">
             {/* メインタイトル */}
