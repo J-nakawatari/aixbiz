@@ -15,6 +15,11 @@ export const metadata: Metadata = {
   title: 'AI導入ナビゲーター | 中小企業のためのAI業務改善診断サービス',
   description: '高額なシステムや複雑なAI導入は不要。ChatGPTなど、すぐに使えるAIを活かして御社の業務課題に合わせた効率化プランを診断・ご提案します。',
   keywords: 'AI導入,中小企業,業務改善,ChatGPT,AI診断,業務効率化,DX推進,生産性向上',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   alternates: {
     canonical: 'https://aixbiz.jp',
   },
