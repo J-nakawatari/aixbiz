@@ -1,15 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:4000';
+// 本番環境では内部ポート、開発環境ではローカルポートを使用
+const BACKEND_URL = process.env.NODE_ENV === 'production' 
+  ? 'http://localhost:4004'  // 本番環境での内部接続
+  : 'http://localhost:4004'; // 開発環境
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    // CSRFトークンを取得
+    const csrfResponse = await fetch(`${BACKEND_URL}/api/csrf/token`, {
+      method: 'GET',
+    });
+    
+    if (!csrfResponse.ok) {
+      console.error('Failed to get CSRF token');
+      return NextResponse.json(
+        { success: false, message: 'セキュリティトークンの取得に失敗しました' },
+        { status: 500 }
+      );
+    }
+
+    const csrfData = await csrfResponse.json();
+    const cookieHeader = csrfResponse.headers.get('set-cookie');
+
     const response = await fetch(`${BACKEND_URL}/api/contact/submit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfData.token,
+        ...(cookieHeader && { 'Cookie': cookieHeader })
       },
       body: JSON.stringify(body),
     });
@@ -23,6 +44,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Contact proxy error:', error);
+    console.error('Backend URL:', BACKEND_URL);
     return NextResponse.json(
       { success: false, message: 'エラーが発生しました' },
       { status: 500 }
