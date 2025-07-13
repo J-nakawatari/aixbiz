@@ -12,7 +12,7 @@ const svgPaths = {
 
 function WaveDecoration() {
   return (
-    <div className="absolute h-[100px] sm:h-[166px] left-0 bottom-0 w-full z-1">
+    <div className="absolute h-[100px] sm:h-[166px] left-0 -bottom-[1px] w-full z-1">
       <svg
         className="block size-full"
         fill="none"
@@ -45,7 +45,7 @@ export default function HeroSection() {
     <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 min-h-[600px] lg:h-[600px] overflow-hidden mt-16 sm:mt-20">
       {/* 背景画像 */}
       <div 
-        className="absolute inset-0 bg-no-repeat bg-right bg-contain opacity-50"
+        className="absolute inset-0 bg-no-repeat bg-right bg-contain"
         style={{ backgroundImage: "url('/images/hero-img01.png')" }}
       />
       
