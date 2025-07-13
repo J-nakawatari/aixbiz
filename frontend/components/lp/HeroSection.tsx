@@ -49,7 +49,7 @@ export default function HeroSection() {
         <WaveDecoration />
 
         {/* メインコンテンツ */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-[0px] items-center justify-center lg:justify-start px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto w-full relative z-20 py-12 lg:py-0">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-[0px] items-center justify-center lg:justify-start px-4 sm:px-8 lg:px-16 mx-auto w-full relative z-20" style={{ maxWidth: '90rem', padding: '100px 0' }}>
           {/* 背景画像をコンテンツエリア内に配置 */}
           <div 
             className="absolute inset-0 bg-no-repeat bg-right bg-contain pointer-events-none"
