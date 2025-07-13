@@ -190,7 +190,7 @@ export function generateHTMLReport(data: ReportData): string {
                 const reportId = reportIdMatch ? reportIdMatch[1] : 'report';
                 
                 // PDF生成APIを呼び出し（reportIdのみ送信）
-                const response = await fetch('/api/pdf/generate', {
+                const response = await fetch('/api/pdf/generate-pdf', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
