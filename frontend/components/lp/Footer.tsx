@@ -1,4 +1,4 @@
-import { Mail, Facebook, Twitter, Instagram } from "lucide-react";
+import { Mail } from "lucide-react";
 import Logo from "./Logo";
 
 export default function Footer() {
@@ -39,11 +39,11 @@ export default function Footer() {
 
           {/* Company Information */}
           <div>
-            <h3 className="text-[14px] text-white mb-4">会社情報</h3>
+            <h3 className="text-[14px] text-white mb-4">運営情報</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-[14px] text-slate-400 hover:text-white transition-colors">
-                  会社概要
+                  運営者情報
                 </a>
               </li>
               <li>
@@ -62,20 +62,9 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="text-[14px] text-white mb-4">お問い合わせ</h3>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-indigo-400" />
               <span className="text-[14px] text-slate-400">info@aixbiz.jp</span>
-            </div>
-            <div className="flex gap-4">
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
             </div>
           </div>
         </div>
