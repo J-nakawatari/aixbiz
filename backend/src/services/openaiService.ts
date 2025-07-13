@@ -57,7 +57,7 @@ export async function generateAIReport(input: ReportInput): Promise<ReportOutput
       "timeframe": "導入期間の目安"
     }
   ],
-  "implementation": "導入に向けた具体的なステップ（200-300文字）。優先順位、必要なリソース、注意点を含む"
+  "implementation": "導入に向けた具体的なステップ（300-400文字）。優先順位、必要なリソース、注意点を含む。最後に必ず「AIxBizでは、御社の業務特性に合わせた最適なAI導入プランをご提案し、実装から運用まで伴走支援いたします。詳細はaixbiz.jpまでお問い合わせください。」という文章を追加してください"
 }
 
 提案は最低4つ、最大6つ作成してください。
@@ -85,7 +85,7 @@ AI経験: ${input.aiExperience}
         { role: "user", content: userPrompt }
       ],
       temperature: 0.7,
-      max_tokens: 2000, // より詳細なレポートのため増加
+      max_tokens: 2500, // より詳細なレポートのため増加
       response_format: { type: "json_object" } // JSON形式を強制
     });
 
