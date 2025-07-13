@@ -48,7 +48,7 @@ export default function FAQSection() {
               className="bg-white rounded-lg shadow-sm border border-gray-200"
             >
               <AccordionTrigger className="px-6 py-4 text-left hover:no-underline">
-                <span className="text-gray-800 text-left text-[24px] font-bold">{faq.question}</span>
+                <span className="text-gray-800 text-left text-[18px] font-bold">{faq.question}</span>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-4">
                 <p className="text-gray-600 leading-relaxed text-[16px]">{faq.answer}</p>
