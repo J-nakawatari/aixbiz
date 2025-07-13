@@ -129,9 +129,9 @@ export function generateHTMLReport(data: ReportData): string {
             line-height: 1.6;
         }
         .meta {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid #e5e7eb;
