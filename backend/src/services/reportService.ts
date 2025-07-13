@@ -65,11 +65,13 @@ export function generateHTMLReport(data: ReportData): string {
                 margin: 0 !important;
                 padding: 0 !important;
                 max-width: none !important;
+                background-color: white !important;
             }
             .container {
-                padding: 10px !important;
+                padding: 15px !important;
                 border-radius: 0 !important;
                 box-shadow: none !important;
+                max-width: none !important;
             }
         }
         body {
