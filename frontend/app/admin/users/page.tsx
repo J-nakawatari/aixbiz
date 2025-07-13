@@ -45,6 +45,8 @@ export default function AdminUsersPage() {
     password: '',
     role: 'admin' as 'admin' | 'super_admin'
   });
+  const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     // 現在のユーザー情報を取得
@@ -127,6 +129,105 @@ export default function AdminUsersPage() {
     }
   };
 
+  const handleEdit = (admin: Admin) => {
+    setEditingAdmin(admin);
+    setFormData({
+      username: admin.username,
+      email: admin.email,
+      password: '',
+      role: admin.role
+    });
+    setShowEditForm(true);
+    setShowAddForm(false);
+  };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingAdmin) return;
+    
+    setIsLoading(true);
+
+    try {
+      // CSRFトークンを取得
+      const csrfResponse = await fetch('/api/csrf/token', {
+        credentials: 'include'
+      });
+      const csrfData = await csrfResponse.json();
+
+      const token = localStorage.getItem('admin_token');
+      const updateData = {
+        username: formData.username,
+        email: formData.email,
+        role: formData.role,
+        isActive: editingAdmin.isActive
+      };
+
+      const response = await fetch(`/api/v1/admin/admins/${editingAdmin._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'X-CSRF-Token': csrfData.token
+        },
+        credentials: 'include',
+        body: JSON.stringify(updateData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setShowEditForm(false);
+        setEditingAdmin(null);
+        setFormData({ username: '', email: '', password: '', role: 'admin' });
+        fetchAdmins(); // リストを更新
+        alert('管理者情報を更新しました');
+      } else {
+        setError(data.message || '管理者更新に失敗しました');
+      }
+    } catch (error) {
+      setError('ネットワークエラーが発生しました');
+      console.error('Admin update error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (admin: Admin) => {
+    if (!confirm(`管理者「${admin.username}」を削除しますか？この操作は取り消せません。`)) {
+      return;
+    }
+
+    try {
+      // CSRFトークンを取得
+      const csrfResponse = await fetch('/api/csrf/token', {
+        credentials: 'include'
+      });
+      const csrfData = await csrfResponse.json();
+
+      const token = localStorage.getItem('admin_token');
+      const response = await fetch(`/api/v1/admin/admins/${admin._id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'X-CSRF-Token': csrfData.token
+        },
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        fetchAdmins(); // リストを更新
+        alert('管理者を削除しました');
+      } else {
+        setError(data.message || '管理者削除に失敗しました');
+      }
+    } catch (error) {
+      setError('ネットワークエラーが発生しました');
+      console.error('Admin delete error:', error);
+    }
+  };
+
   const getRoleBadge = (role: string) => {
     if (role === 'super_admin') {
       return (
@@ -191,11 +292,13 @@ export default function AdminUsersPage() {
         )}
       </div>
 
-      {/* Add Admin Form */}
-      {showAddForm && currentUser?.role === 'super_admin' && (
+      {/* Add/Edit Admin Form */}
+      {(showAddForm || showEditForm) && currentUser?.role === 'super_admin' && (
         <Card className="p-6 bg-white">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">新規管理者登録</h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            {showEditForm ? '管理者情報編集' : '新規管理者登録'}
+          </h3>
+          <form onSubmit={showEditForm ? handleUpdate : handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -221,19 +324,21 @@ export default function AdminUsersPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  パスワード
-                </label>
-                <input
-                  type="password"
-                  required
-                  minLength={8}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                />
-              </div>
+              {!showEditForm && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    パスワード
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    minLength={8}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  />
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   権限
@@ -250,12 +355,17 @@ export default function AdminUsersPage() {
             </div>
             <div className="flex gap-2">
               <Button type="submit" className="bg-indigo-600 hover:bg-indigo-700">
-                登録
+                {showEditForm ? '更新' : '登録'}
               </Button>
               <Button 
                 type="button" 
                 variant="outline"
-                onClick={() => setShowAddForm(false)}
+                onClick={() => {
+                  setShowAddForm(false);
+                  setShowEditForm(false);
+                  setEditingAdmin(null);
+                  setFormData({ username: '', email: '', password: '', role: 'admin' });
+                }}
               >
                 キャンセル
               </Button>
@@ -332,6 +442,7 @@ export default function AdminUsersPage() {
                       size="sm"
                       variant="outline"
                       className="text-gray-600 hover:text-gray-900"
+                      onClick={() => handleEdit(admin)}
                     >
                       <Edit className="w-4 h-4" />
                     </Button>
@@ -339,6 +450,7 @@ export default function AdminUsersPage() {
                       size="sm"
                       variant="outline"
                       className="text-red-600 hover:text-red-900"
+                      onClick={() => handleDelete(admin)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

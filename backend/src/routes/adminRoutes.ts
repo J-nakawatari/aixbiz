@@ -6,7 +6,9 @@ import {
   adminLogin,
   getAdminProfile,
   registerAdmin,
-  getAdminList
+  getAdminList,
+  updateAdmin,
+  deleteAdmin
 } from '../controllers/adminAuthController';
 import {
   getContacts,
@@ -60,6 +62,28 @@ router.get(
   adminAuth,
   superAdminOnly,
   getAdminList
+);
+
+// 管理者更新（スーパー管理者のみ）
+router.put(
+  '/admins/:id',
+  adminAuth,
+  superAdminOnly,
+  [
+    body('username').isLength({ min: 3, max: 30 }).withMessage('ユーザー名は3-30文字で入力してください'),
+    body('email').isEmail().normalizeEmail().withMessage('有効なメールアドレスを入力してください'),
+    body('role').optional().isIn(['admin', 'super_admin']).withMessage('無効な権限です'),
+    body('isActive').optional().isBoolean().withMessage('有効/無効は真偽値で指定してください')
+  ],
+  updateAdmin
+);
+
+// 管理者削除（スーパー管理者のみ）
+router.delete(
+  '/admins/:id',
+  adminAuth,
+  superAdminOnly,
+  deleteAdmin
 );
 
 // ===============================

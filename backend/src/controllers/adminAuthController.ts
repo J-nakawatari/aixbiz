@@ -154,3 +154,81 @@ export const getAdminList = async (req: any, res: Response) => {
     });
   }
 };
+
+// 管理者更新（スーパー管理者のみ）
+export const updateAdmin = async (req: any, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { username, email, role, isActive } = req.body;
+
+    // 自分自身は編集できない
+    if (id === req.admin._id.toString()) {
+      return res.status(400).json({
+        success: false,
+        message: '自分自身のアカウントは編集できません'
+      });
+    }
+
+    const admin = await Admin.findByIdAndUpdate(
+      id,
+      { username, email, role, isActive },
+      { new: true }
+    ).select('-password');
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: '管理者が見つかりません'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: '管理者情報を更新しました',
+      admin
+    });
+
+  } catch (error) {
+    console.error('Update admin error:', error);
+    res.status(500).json({
+      success: false,
+      message: '管理者更新中にエラーが発生しました'
+    });
+  }
+};
+
+// 管理者削除（スーパー管理者のみ）
+export const deleteAdmin = async (req: any, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    // 自分自身は削除できない
+    if (id === req.admin._id.toString()) {
+      return res.status(400).json({
+        success: false,
+        message: '自分自身のアカウントは削除できません'
+      });
+    }
+
+    const admin = await Admin.findByIdAndDelete(id);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: '管理者が見つかりません'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: '管理者を削除しました'
+    });
+
+  } catch (error) {
+    console.error('Delete admin error:', error);
+    res.status(500).json({
+      success: false,
+      message: '管理者削除中にエラーが発生しました'
+    });
+  }
+};
