@@ -70,13 +70,13 @@ AI経験: ${input.aiExperience}
 
     // OpenAI APIの呼び出し
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // コスト削減のためGPT-3.5を使用
+      model: "gpt-4o-mini", // 品質とコストのバランスが良いモデル
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
       ],
       temperature: 0.7,
-      max_tokens: 1000,
+      max_tokens: 2000, // より詳細なレポートのため増加
       response_format: { type: "json_object" } // JSON形式を強制
     });
 
@@ -97,14 +97,30 @@ AI経験: ${input.aiExperience}
       generatedAt: timestamp
     };
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('OpenAI API error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      status: error.status,
+      code: error.code,
+      type: error.type
+    });
     
-    // エラー時のフォールバック
+    // エラーメッセージをより詳細に
+    let errorMessage = "申し訳ございません。レポート生成中にエラーが発生しました。";
+    
+    if (error.code === 'invalid_api_key') {
+      errorMessage = "APIキーの設定に問題があります。管理者にお問い合わせください。";
+    } else if (error.status === 429) {
+      errorMessage = "現在アクセスが集中しています。しばらく待ってから再度お試しください。";
+    } else if (error.status === 401) {
+      errorMessage = "認証エラーが発生しました。管理者にお問い合わせください。";
+    }
+    
     return {
-      summary: "申し訳ございません。レポート生成中にエラーが発生しました。",
+      summary: errorMessage,
       recommendations: [],
-      implementation: "しばらく時間をおいてから再度お試しください。",
+      implementation: "エラーの詳細: " + (error.message || "不明なエラー"),
       reportId: `ERR-${Date.now()}`,
       generatedAt: new Date().toISOString()
     };
