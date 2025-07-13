@@ -1,9 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Target } from "lucide-react";
+
+// 業種ごとの部門・業務の定義
+const departmentsByIndustry: Record<string, string[]> = {
+  "製造業": ["生産管理", "品質管理", "在庫管理", "営業・マーケティング", "経理・総務", "人事"],
+  "士業": ["案件管理", "書類作成", "顧客対応", "マーケティング", "経理・事務", "リサーチ"],
+  "飲食業": ["店舗運営", "仕入れ・在庫管理", "シフト管理", "顧客対応", "マーケティング", "経理"],
+  "不動産": ["物件管理", "顧客対応", "契約管理", "営業・マーケティング", "経理・総務"],
+  "小売業": ["店舗運営", "在庫管理", "顧客対応", "EC運営", "マーケティング", "経理"],
+  "IT・Web": ["開発", "プロジェクト管理", "カスタマーサポート", "営業・マーケティング", "人事", "経理"]
+};
 
 export default function DiagnosticSection() {
   const [formData, setFormData] = useState({
@@ -16,6 +26,18 @@ export default function DiagnosticSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [reportHtml, setReportHtml] = useState("");
   const [error, setError] = useState("");
+  const [availableDepartments, setAvailableDepartments] = useState<string[]>([]);
+
+  // 業種が変更されたときに部門・業務を更新
+  useEffect(() => {
+    if (formData.industry && departmentsByIndustry[formData.industry]) {
+      setAvailableDepartments(departmentsByIndustry[formData.industry]);
+      // 部門・業務をリセット
+      setFormData(prev => ({ ...prev, jobFunction: "" }));
+    } else {
+      setAvailableDepartments([]);
+    }
+  }, [formData.industry]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -96,16 +118,17 @@ export default function DiagnosticSection() {
             <div>
               <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">部門・業務</label>
               <select 
-                className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]"
+                className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px] disabled:bg-gray-100 disabled:text-gray-500"
                 value={formData.jobFunction}
                 onChange={(e) => setFormData({...formData, jobFunction: e.target.value})}
+                disabled={!formData.industry || availableDepartments.length === 0}
               >
-                <option value="">選択してください</option>
-                <option value="営業・マーケティング">営業・マーケティング</option>
-                <option value="経理・総務">経理・総務</option>
-                <option value="人事">人事</option>
-                <option value="カスタマーサポート">カスタマーサポート</option>
-                <option value="製造・生産">製造・生産</option>
+                <option value="">
+                  {formData.industry ? "選択してください" : "まず業種を選択してください"}
+                </option>
+                {availableDepartments.map((dept) => (
+                  <option key={dept} value={dept}>{dept}</option>
+                ))}
               </select>
             </div>
             
