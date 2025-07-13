@@ -11,3 +11,13 @@ build/
 .idea/
 coverage/
 .nyc_output/
+
+# Documentation with potentially sensitive information
+docs/server-setup-commands.md
+docs/webhook-setup.md
+docs/claude_code_api_spec.json
+docs/port-allocation.md
+
+# Development files
+docs/AI導入無料診断LP/
+docs/assets/
