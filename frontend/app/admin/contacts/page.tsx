@@ -100,21 +100,21 @@ export default function ContactsPage() {
     switch (status) {
       case 'unread':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-red-100 text-red-800">
             <Mail className="w-3 h-3 mr-1" />
             未読
           </span>
         );
       case 'read':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-yellow-100 text-yellow-800">
             <Eye className="w-3 h-3 mr-1" />
             既読
           </span>
         );
       case 'responded':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-green-100 text-green-800">
             <CheckCircle className="w-3 h-3 mr-1" />
             対応済み
           </span>
@@ -155,7 +155,7 @@ export default function ContactsPage() {
               <input
                 type="text"
                 placeholder="会社名、担当者名で検索..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -163,7 +163,7 @@ export default function ContactsPage() {
           </div>
           <div className="flex gap-2">
             <select
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
             >
@@ -174,7 +174,7 @@ export default function ContactsPage() {
             </select>
             <Button 
               onClick={fetchContacts}
-              className="bg-indigo-600 hover:bg-indigo-700"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white"
             >
               <Filter className="w-4 h-4 mr-2" />
               検索
@@ -226,7 +226,7 @@ export default function ContactsPage() {
                     {getStatusBadge(contact.status)}
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base text-gray-600">
                     <div className="flex items-center">
                       <Building className="w-4 h-4 mr-2" />
                       担当者: {contact.contactName}
@@ -244,13 +244,13 @@ export default function ContactsPage() {
                   </div>
                   
                   <div className="mt-3">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-base text-gray-600">
                       課題: {contact.challenges.slice(0, 2).join(', ')}
                       {contact.challenges.length > 2 && '...'}
                     </p>
                   </div>
                   
-                  <div className="flex items-center mt-3 text-xs text-gray-500">
+                  <div className="flex items-center mt-3 text-base text-gray-500">
                     <Clock className="w-3 h-3 mr-1" />
                     {formatDate(contact.createdAt)}
                   </div>
@@ -260,7 +260,7 @@ export default function ContactsPage() {
                   <Link href={`/admin/contacts/${contact._id}`}>
                     <Button
                       size="sm"
-                      className="bg-indigo-600 hover:bg-indigo-700"
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white"
                     >
                       <Eye className="w-4 h-4 mr-2" />
                       詳細
@@ -281,12 +281,13 @@ export default function ContactsPage() {
               <Button
                 onClick={() => setCurrentPage(currentPage - 1)}
                 variant="outline"
+                className="text-white"
               >
                 前へ
               </Button>
             )}
             
-            <span className="px-4 py-2 text-sm text-gray-600">
+            <span className="px-4 py-2 text-base text-gray-600">
               {currentPage} / {pagination.pages}
             </span>
             
@@ -294,6 +295,7 @@ export default function ContactsPage() {
               <Button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 variant="outline"
+                className="text-white"
               >
                 次へ
               </Button>

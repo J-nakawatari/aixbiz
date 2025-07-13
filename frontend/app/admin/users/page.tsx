@@ -231,14 +231,14 @@ export default function AdminUsersPage() {
   const getRoleBadge = (role: string) => {
     if (role === 'super_admin') {
       return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-purple-100 text-purple-800">
           <Crown className="w-3 h-3 mr-1" />
           スーパー管理者
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-blue-100 text-blue-800">
         <Shield className="w-3 h-3 mr-1" />
         管理者
       </span>
@@ -248,14 +248,14 @@ export default function AdminUsersPage() {
   const getStatusBadge = (isActive: boolean) => {
     if (isActive) {
       return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-green-100 text-green-800">
           <UserCheck className="w-3 h-3 mr-1" />
           有効
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium bg-red-100 text-red-800">
         <UserX className="w-3 h-3 mr-1" />
         無効
       </span>
@@ -284,7 +284,7 @@ export default function AdminUsersPage() {
         {currentUser?.role === 'super_admin' && (
           <Button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="bg-indigo-600 hover:bg-indigo-700"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
           >
             <Plus className="w-4 h-4 mr-2" />
             管理者追加
@@ -301,50 +301,50 @@ export default function AdminUsersPage() {
           <form onSubmit={showEditForm ? handleUpdate : handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base font-medium text-gray-700 mb-2">
                   ユーザー名
                 </label>
                 <input
                   type="text"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base font-medium text-gray-700 mb-2">
                   メールアドレス
                 </label>
                 <input
                   type="email"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
               {!showEditForm && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-base font-medium text-gray-700 mb-2">
                     パスワード
                   </label>
                   <input
                     type="password"
                     required
                     minLength={8}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   />
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base font-medium text-gray-700 mb-2">
                   権限
                 </label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value as 'admin' | 'super_admin' })}
                 >
@@ -354,12 +354,13 @@ export default function AdminUsersPage() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button type="submit" className="bg-indigo-600 hover:bg-indigo-700">
+              <Button type="submit" className="bg-indigo-600 hover:bg-indigo-700 text-white">
                 {showEditForm ? '更新' : '登録'}
               </Button>
               <Button 
                 type="button" 
                 variant="outline"
+                className="text-white"
                 onClick={() => {
                   setShowAddForm(false);
                   setShowEditForm(false);
@@ -418,7 +419,7 @@ export default function AdminUsersPage() {
                     {getStatusBadge(admin.isActive)}
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base text-gray-600">
                     <div className="flex items-center">
                       <Mail className="w-4 h-4 mr-2" />
                       {admin.email}
@@ -441,7 +442,7 @@ export default function AdminUsersPage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-white"
                       onClick={() => handleEdit(admin)}
                     >
                       <Edit className="w-4 h-4" />
@@ -449,7 +450,7 @@ export default function AdminUsersPage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="text-red-600 hover:text-red-900"
+                      className="text-white"
                       onClick={() => handleDelete(admin)}
                     >
                       <Trash2 className="w-4 h-4" />
