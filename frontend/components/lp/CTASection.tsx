@@ -264,14 +264,25 @@ export default function CTASection() {
                   "社内コミュニケーション",
                   "書類・文書作成の効率化"
                 ].map((task, index) => (
-                  <label key={index} className="flex items-center">
+                  <label key={index} className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-gray-200 hover:border-indigo-300 transition-all duration-200 bg-white hover:bg-indigo-50">
                     <input 
                       type="checkbox" 
-                      className="mr-3 w-4 h-4"
+                      className="sr-only"
                       checked={formData.challenges.includes(task)}
                       onChange={(e) => handleChallengeChange(task, e.target.checked)}
                     />
-                    <span className="text-gray-700 text-[16px]">{task}</span>
+                    <div className={`w-5 h-5 rounded-md border-2 mr-3 flex items-center justify-center transition-all duration-200 ${
+                      formData.challenges.includes(task) 
+                        ? 'bg-indigo-600 border-indigo-600' 
+                        : 'bg-white border-gray-300'
+                    }`}>
+                      {formData.challenges.includes(task) && (
+                        <svg className="w-3 h-3 text-white" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" viewBox="0 0 24 24" stroke="currentColor">
+                          <path d="M5 13l4 4L19 7"></path>
+                        </svg>
+                      )}
+                    </div>
+                    <span className="text-gray-700 text-[16px] select-none">{task}</span>
                   </label>
                 ))}
               </div>
