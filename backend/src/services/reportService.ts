@@ -57,7 +57,7 @@ export function generateHTMLReport(data: ReportData): string {
     <title>AI業務改善診断レポート</title>
     <style>
         @page {
-            margin: 20mm;
+            margin: 5mm 10mm;
             size: A4;
         }
         body {
