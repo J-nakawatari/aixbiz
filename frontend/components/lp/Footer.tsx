@@ -25,7 +25,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#industry-usage" className="text-[14px] text-slate-400 hover:text-white transition-colors">
+                <a href="#usecases" className="text-[14px] text-slate-400 hover:text-white transition-colors">
                   活用事例
                 </a>
               </li>
