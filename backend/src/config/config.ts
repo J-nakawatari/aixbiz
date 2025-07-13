@@ -10,6 +10,7 @@ export const config = {
   jwtSecret: process.env.JWT_SECRET || 'your-jwt-secret-here',
   corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:3000',
   openaiApiKey: process.env.OPENAI_API_KEY || '',
+  redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
   // 開発者IPアドレス（レート制限を回避）
   developerIps: process.env.DEVELOPER_IPS ? process.env.DEVELOPER_IPS.split(',') : []
 };

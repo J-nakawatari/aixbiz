@@ -1,46 +1,74 @@
-// 一時的なインメモリストレージ（本番環境ではRedisやDBを使用すべき）
+import { createClient } from 'redis';
+import { config } from '../config/config';
+
 interface StoredReport {
   reportData: any;
   html: string;
   createdAt: Date;
 }
 
-const reportStorage = new Map<string, StoredReport>();
+// Redisクライアントの初期化
+const redisClient = createClient({
+  url: config.redisUrl || 'redis://localhost:6379'
+});
 
-// 30分後に自動削除
-const EXPIRY_TIME = 30 * 60 * 1000;
+redisClient.on('error', (err) => {
+  console.error('Redis Client Error:', err);
+});
 
-export function storeReport(reportId: string, reportData: any, html: string): void {
-  reportStorage.set(reportId, {
-    reportData,
-    html,
-    createdAt: new Date()
-  });
+// Redis接続
+(async () => {
+  try {
+    await redisClient.connect();
+    console.log('Redis connected successfully');
+  } catch (error) {
+    console.error('Failed to connect to Redis:', error);
+  }
+})();
 
-  // 期限切れレポートの自動削除
-  setTimeout(() => {
-    reportStorage.delete(reportId);
-  }, EXPIRY_TIME);
+// 30分（秒単位）
+const EXPIRY_TIME = 30 * 60;
+
+export async function storeReport(reportId: string, reportData: any, html: string): Promise<void> {
+  try {
+    const report: StoredReport = {
+      reportData,
+      html,
+      createdAt: new Date()
+    };
+    
+    // RedisにJSON形式で保存（30分のTTL付き）
+    await redisClient.setEx(
+      `report:${reportId}`,
+      EXPIRY_TIME,
+      JSON.stringify(report)
+    );
+  } catch (error) {
+    console.error('Failed to store report:', error);
+    throw error;
+  }
 }
 
-export function getReport(reportId: string): StoredReport | undefined {
-  const report = reportStorage.get(reportId);
-  
-  // 期限切れチェック
-  if (report && (Date.now() - report.createdAt.getTime() > EXPIRY_TIME)) {
-    reportStorage.delete(reportId);
+export async function getReport(reportId: string): Promise<StoredReport | undefined> {
+  try {
+    const data = await redisClient.get(`report:${reportId}`);
+    
+    if (!data) {
+      return undefined;
+    }
+    
+    const report = JSON.parse(data) as StoredReport;
+    report.createdAt = new Date(report.createdAt);
+    
+    return report;
+  } catch (error) {
+    console.error('Failed to get report:', error);
     return undefined;
   }
-  
-  return report;
 }
 
-// 定期的なクリーンアップ
-setInterval(() => {
-  const now = Date.now();
-  for (const [id, report] of reportStorage.entries()) {
-    if (now - report.createdAt.getTime() > EXPIRY_TIME) {
-      reportStorage.delete(id);
-    }
-  }
-}, 5 * 60 * 1000); // 5分ごと
+// グレースフルシャットダウン
+process.on('SIGINT', async () => {
+  await redisClient.disconnect();
+  process.exit(0);
+});

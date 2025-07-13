@@ -26,8 +26,10 @@ export const generateReport = async (req: Request, res: Response) => {
     // HTMLレポートを生成
     const htmlReport = generateHTMLReport(reportData);
 
-    // レポートを保存
-    storeReport(reportData.reportId, reportData, htmlReport);
+    // レポートを保存（非同期だがawaitしない）
+    storeReport(reportData.reportId, reportData, htmlReport).catch(err => {
+      console.error('Failed to store report:', err);
+    });
 
     // レスポンスとして返す
     res.json({
