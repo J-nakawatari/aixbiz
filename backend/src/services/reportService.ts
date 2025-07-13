@@ -186,8 +186,11 @@ export function generateHTMLReport(data: ReportData): string {
                 const htmlContent = document.documentElement.outerHTML;
                 
                 // レポートIDを取得（フッターから）
-                const reportIdMatch = htmlContent.match(/レポートID: ([^<]+)</);
+                // デバッグ用
+                console.log('Searching for report ID in HTML...');
+                const reportIdMatch = htmlContent.match(/レポートID: (RPT-\d+)/);
                 const reportId = reportIdMatch ? reportIdMatch[1] : 'report';
+                console.log('Extracted report ID:', reportId);
                 
                 // PDF生成APIを呼び出し（reportIdのみ送信）
                 const response = await fetch('https://aixbiz.jp/api/pdf/generate-pdf', {
