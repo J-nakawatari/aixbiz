@@ -91,6 +91,16 @@ export default function HeroSection() {
             </Button>
           </div>
 
+          {/* 右側：画像 */}
+          <div className="w-full lg:w-[624px] h-[300px] sm:h-[400px] lg:h-[624px] flex-shrink-0 mt-8 lg:mt-0">
+            <ImageWithFallback
+              src="/images/hero-dashu.png"
+              alt="AI業務改善診断のイメージ - 女性がタブレットとデスクトップを使用する様子"
+              width={624}
+              height={624}
+              className="w-full h-full object-cover object-center rounded-lg"
+            />
+          </div>
         </div>
       </div>
     </section>
