@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import Contact from '../models/Contact';
 
 export const submitContact = async (req: Request, res: Response) => {
   try {
@@ -16,27 +17,42 @@ export const submitContact = async (req: Request, res: Response) => {
       companyName,
       contactName,
       email,
-      industry,
-      employeeCount,
-      challenges
-    } = req.body;
-
-    // ここで通常はデータベースに保存したり、メール送信したりします
-    // 今回は開発中なのでログ出力のみ
-    console.log('Contact form submission:', {
-      companyName,
-      contactName,
-      email,
+      phoneNumber,
       industry,
       employeeCount,
       challenges,
-      submittedAt: new Date().toISOString()
+      message
+    } = req.body;
+
+    // IPアドレスとユーザーエージェントを取得
+    const ipAddress = req.ip || req.socket.remoteAddress;
+    const userAgent = req.headers['user-agent'];
+
+    // データベースに保存
+    const contact = new Contact({
+      companyName,
+      contactName,
+      email,
+      phoneNumber,
+      industry,
+      employeeCount,
+      challenges,
+      message,
+      ipAddress,
+      userAgent
+    });
+
+    await contact.save();
+
+    console.log('Contact saved to database:', {
+      id: contact._id,
+      email: contact.email,
+      companyName: contact.companyName
     });
 
     // TODO: 実際の実装では以下を行う
-    // 1. MongoDBに保存
-    // 2. 管理者へメール通知
-    // 3. 自動返信メール送信
+    // 1. 管理者へメール通知
+    // 2. 自動返信メール送信
 
     res.json({
       success: true,

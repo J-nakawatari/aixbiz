@@ -12,9 +12,13 @@ import { monitoringService } from './services/monitoringService';
 import { csrfProtection, initCSRFToken } from './middlewares/csrf';
 import { logFeatureFlags } from './config/features';
 import { securityAudit, getSecurityStats } from './middlewares/securityAudit';
+import connectDB from './config/database';
 
 // 環境変数の読み込み
 dotenv.config();
+
+// データベース接続
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 4004;
@@ -79,6 +83,10 @@ app.get('/api/stats', (req, res) => {
 app.use('/api/report', reportRoutes);
 app.use('/api/pdf', pdfRoutes);
 app.use('/api/contact', contactRoutes);
+
+// 管理画面API（v1）
+import adminRoutes from './routes/adminRoutes';
+app.use('/api/v1/admin', adminRoutes);
 
 // 404ハンドリング
 app.use((req, res) => {
