@@ -198,7 +198,7 @@ export default function ContactDetailPage() {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <Link href="/admin/contacts">
-            <Button variant="outline" className="text-white">
+            <Button variant="outline" className="border-gray-600 text-gray-600 hover:bg-gray-50">
               <ArrowLeft className="w-4 h-4 mr-2" />
               一覧に戻る
             </Button>
@@ -280,7 +280,7 @@ export default function ContactDetailPage() {
             onClick={() => updateStatus('unread')}
             disabled={contact.status === 'unread' || isUpdating}
             variant={contact.status === 'unread' ? 'default' : 'outline'}
-            className={contact.status === 'unread' ? 'bg-red-600 hover:bg-red-700 text-white' : 'text-white'}
+            className={contact.status === 'unread' ? 'bg-red-600 hover:bg-red-700 text-white' : 'border-red-600 text-red-600 hover:bg-red-50'}
           >
             未読にする
           </Button>
@@ -288,7 +288,7 @@ export default function ContactDetailPage() {
             onClick={() => updateStatus('read')}
             disabled={contact.status === 'read' || isUpdating}
             variant={contact.status === 'read' ? 'default' : 'outline'}
-            className={contact.status === 'read' ? 'bg-yellow-600 hover:bg-yellow-700 text-white' : 'text-white'}
+            className={contact.status === 'read' ? 'bg-yellow-600 hover:bg-yellow-700 text-white' : 'border-yellow-600 text-yellow-600 hover:bg-yellow-50'}
           >
             既読にする
           </Button>
@@ -296,7 +296,7 @@ export default function ContactDetailPage() {
             onClick={() => updateStatus('responded')}
             disabled={contact.status === 'responded' || isUpdating}
             variant={contact.status === 'responded' ? 'default' : 'outline'}
-            className={contact.status === 'responded' ? 'bg-green-600 hover:bg-green-700 text-white' : 'text-white'}
+            className={contact.status === 'responded' ? 'bg-green-600 hover:bg-green-700 text-white' : 'border-green-600 text-green-600 hover:bg-green-50'}
           >
             対応済みにする
           </Button>
