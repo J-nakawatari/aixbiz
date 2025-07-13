@@ -185,30 +185,11 @@ export function generateHTMLReport(data: ReportData): string {
                 // 現在のHTMLを取得
                 const htmlContent = document.documentElement.outerHTML;
                 
-                // レポートIDを取得（フッターから）
-                // デバッグ用
-                console.log('Searching for report ID in HTML...');
-                
-                // 複数のパターンを試す
-                let reportId = 'report';
-                
-                // パターン1: レポートID: RPT-xxxxx
-                let match = htmlContent.match(/レポートID:\s*(RPT-\d+)/);
-                if (!match) {
-                    // パターン2: エスケープされたHTMLエンティティ
-                    match = htmlContent.match(/レポートID:\s*([^<&]+)/);
-                }
-                
-                if (match && match[1]) {
-                    reportId = match[1].trim();
-                }
+                // レポートIDを取得（DOM要素から直接取得）
+                const reportIdElement = document.getElementById('report-id');
+                const reportId = reportIdElement ? reportIdElement.textContent : 'report';
                 
                 console.log('Extracted report ID:', reportId);
-                
-                // レポートIDが取得できない場合は、ウィンドウのタイトルやURLから取得を試みる
-                if (reportId === 'report') {
-                    console.error('Failed to extract report ID from HTML');
-                }
                 
                 // PDF生成APIを呼び出し（reportIdのみ送信）
                 const response = await fetch('https://aixbiz.jp/api/pdf/generate-pdf', {
@@ -272,7 +253,7 @@ export function generateHTMLReport(data: ReportData): string {
 
         <div class="footer">
             <p>AI導入ナビゲーター by aixbiz</p>
-            <p>レポートID: ${escapeHtml(data.reportId)}</p>
+            <p>レポートID: <span id="report-id">${escapeHtml(data.reportId)}</span></p>
             <p>生成日時: ${new Date(data.generatedAt).toLocaleString('ja-JP')}</p>
         </div>
     </div>
