@@ -56,6 +56,10 @@ export function generateHTMLReport(data: ReportData): string {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI業務改善診断レポート</title>
     <style>
+        @page {
+            margin: 20mm;
+            size: A4;
+        }
         body {
             font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
             line-height: 1.6;
@@ -78,12 +82,16 @@ export function generateHTMLReport(data: ReportData): string {
         h2 {
             color: #4f46e5;
             margin-top: 30px;
+            page-break-after: avoid;
+            break-after: avoid;
         }
         .summary {
             background-color: #f0f4ff;
             padding: 20px;
             border-radius: 5px;
             margin: 20px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         .recommendations {
             margin: 20px 0;
@@ -94,6 +102,8 @@ export function generateHTMLReport(data: ReportData): string {
             margin: 15px 0;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         .recommendation-header {
             display: flex;
@@ -143,6 +153,8 @@ export function generateHTMLReport(data: ReportData): string {
             border-radius: 5px;
             border-left: 4px solid #4f46e5;
             margin: 20px 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         .footer {
             text-align: center;
