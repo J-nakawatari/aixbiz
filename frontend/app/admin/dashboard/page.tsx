@@ -123,55 +123,35 @@ export default function AdminDashboard() {
       )}
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="p-6 bg-white">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">クイックアクション</h3>
-          <div className="space-y-3">
-            <a
-              href="/admin/contacts"
-              className="block p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200"
-            >
-              <div className="flex items-center">
-                <MessageSquare className="w-5 h-5 text-indigo-600 mr-3" />
-                <div>
-                  <p className="font-medium text-gray-900">お問い合わせ管理</p>
-                  <p className="text-sm text-gray-600">未読のお問い合わせを確認する</p>
-                </div>
+      <Card className="p-6 bg-white max-w-2xl">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">クイックアクション</h3>
+        <div className="space-y-3">
+          <a
+            href="/admin/contacts"
+            className="block p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200"
+          >
+            <div className="flex items-center">
+              <MessageSquare className="w-5 h-5 text-indigo-600 mr-3" />
+              <div>
+                <p className="font-medium text-gray-900">お問い合わせ管理</p>
+                <p className="text-sm text-gray-600">未読のお問い合わせを確認する</p>
               </div>
-            </a>
-            <a
-              href="/admin/users"
-              className="block p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200"
-            >
-              <div className="flex items-center">
-                <Users className="w-5 h-5 text-indigo-600 mr-3" />
-                <div>
-                  <p className="font-medium text-gray-900">管理者管理</p>
-                  <p className="text-sm text-gray-600">管理者アカウントを管理する</p>
-                </div>
+            </div>
+          </a>
+          <a
+            href="/admin/users"
+            className="block p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200"
+          >
+            <div className="flex items-center">
+              <Users className="w-5 h-5 text-indigo-600 mr-3" />
+              <div>
+                <p className="font-medium text-gray-900">管理者管理</p>
+                <p className="text-sm text-gray-600">管理者アカウントを管理する</p>
               </div>
-            </a>
-          </div>
-        </Card>
-
-        <Card className="p-6 bg-white">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">システム情報</h3>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-600">サーバー状態</span>
-              <span className="text-green-600 font-medium">正常</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">最終更新</span>
-              <span className="text-gray-900">{new Date().toLocaleDateString('ja-JP')}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">バージョン</span>
-              <span className="text-gray-900">1.0.0</span>
-            </div>
-          </div>
-        </Card>
-      </div>
+          </a>
+        </div>
+      </Card>
     </div>
   );
 }
