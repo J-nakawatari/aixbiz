@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         // クライアントのIPアドレスを転送（レート制限用）
         'X-Forwarded-For': request.headers.get('x-forwarded-for') || 
                            request.headers.get('x-real-ip') || 
-                           request.ip || '',
+                           '',
       },
       body: JSON.stringify(body),
     });
