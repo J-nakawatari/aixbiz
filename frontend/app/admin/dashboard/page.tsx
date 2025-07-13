@@ -29,11 +29,19 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
+      // CSRFトークンを取得
+      const csrfResponse = await fetch('/api/csrf/token', {
+        credentials: 'include'
+      });
+      const csrfData = await csrfResponse.json();
+
       const token = localStorage.getItem('admin_token');
       const response = await fetch('/api/v1/admin/contacts/stats', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+          'X-CSRF-Token': csrfData.token
+        },
+        credentials: 'include'
       });
 
       if (response.ok) {

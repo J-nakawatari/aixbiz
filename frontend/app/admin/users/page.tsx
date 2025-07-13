@@ -57,11 +57,19 @@ export default function AdminUsersPage() {
 
   const fetchAdmins = async () => {
     try {
+      // CSRFトークンを取得
+      const csrfResponse = await fetch('/api/csrf/token', {
+        credentials: 'include'
+      });
+      const csrfData = await csrfResponse.json();
+
       const token = localStorage.getItem('admin_token');
       const response = await fetch('/api/v1/admin/admins', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+          'X-CSRF-Token': csrfData.token
+        },
+        credentials: 'include'
       });
 
       if (response.ok) {
@@ -83,13 +91,21 @@ export default function AdminUsersPage() {
     setIsLoading(true);
 
     try {
+      // CSRFトークンを取得
+      const csrfResponse = await fetch('/api/csrf/token', {
+        credentials: 'include'
+      });
+      const csrfData = await csrfResponse.json();
+
       const token = localStorage.getItem('admin_token');
       const response = await fetch('/api/v1/admin/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'X-CSRF-Token': csrfData.token
         },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
 

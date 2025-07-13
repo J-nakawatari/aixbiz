@@ -59,6 +59,12 @@ export default function ContactsPage() {
 
   const fetchContacts = async () => {
     try {
+      // CSRFトークンを取得
+      const csrfResponse = await fetch('/api/csrf/token', {
+        credentials: 'include'
+      });
+      const csrfData = await csrfResponse.json();
+
       const token = localStorage.getItem('admin_token');
       const params = new URLSearchParams({
         page: currentPage.toString(),
@@ -69,8 +75,10 @@ export default function ContactsPage() {
 
       const response = await fetch(`/api/v1/admin/contacts?${params}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+          'X-CSRF-Token': csrfData.token
+        },
+        credentials: 'include'
       });
 
       if (response.ok) {
