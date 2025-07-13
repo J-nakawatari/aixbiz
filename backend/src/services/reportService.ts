@@ -150,7 +150,43 @@ export function generateHTMLReport(data: ReportData): string {
             color: #666;
             font-size: 0.9em;
         }
+        .download-button {
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .download-button:hover {
+            background-color: #4338ca;
+        }
+        @media print {
+            .download-button {
+                display: none;
+            }
+        }
     </style>
+    <script>
+        function downloadPDF() {
+            // ボタンを一時的に非表示
+            const button = document.querySelector('.download-button');
+            button.style.display = 'none';
+            
+            // 印刷ダイアログを開く
+            window.print();
+            
+            // ボタンを再表示
+            setTimeout(() => {
+                button.style.display = 'block';
+            }, 100);
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -170,6 +206,8 @@ export function generateHTMLReport(data: ReportData): string {
         <div class="implementation">
             ${escapeHtml(data.implementation)}
         </div>
+
+        <button class="download-button" onclick="downloadPDF()">PDFをダウンロード</button>
 
         <div class="footer">
             <p>AI導入ナビゲーター by aixbiz</p>
