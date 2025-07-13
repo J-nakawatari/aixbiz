@@ -57,7 +57,7 @@ export default function Header() {
             <Button 
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-6 rounded-lg text-[16px]"
             >
-              無料診断を受ける
+              AI導入の相談申し込み
             </Button>
           </Link>
         </div>
