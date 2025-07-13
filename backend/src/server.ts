@@ -113,7 +113,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // サーバー起動
-app.listen(PORT, () => {
+app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`Backend server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
   // 機能フラグの設定を表示
   logFeatureFlags();
