@@ -66,21 +66,27 @@ AI経験: ${input.aiExperience}
 
     const parsedResponse = JSON.parse(content);
     
-    // バージョン情報を追加
+    // バージョン情報を追加（年.月.日形式）
+    const now = new Date();
+    const version = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+    
     return {
       ...parsedResponse,
-      version: "2025.07"
+      version
     };
 
   } catch (error) {
     console.error('OpenAI API error:', error);
     
     // エラー時のフォールバック
+    const now = new Date();
+    const version = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+    
     return {
       summary: "申し訳ございません。レポート生成中にエラーが発生しました。",
       recommendations: ["しばらく時間をおいてから再度お試しください"],
       promptExample: "",
-      version: "2025.07"
+      version
     };
   }
 }
