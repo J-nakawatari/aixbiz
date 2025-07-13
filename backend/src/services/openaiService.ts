@@ -30,8 +30,14 @@ export async function generateAIReport(input: ReportInput): Promise<ReportOutput
 {
   "summary": "提案の概要（100文字程度）",
   "recommendations": ["具体的な提案1", "具体的な提案2", "具体的な提案3"],
-  "promptExample": "ChatGPTで使えるプロンプト例"
-}`;
+  "promptExample": "ChatGPTで実際に使える具体的なプロンプト例（200-300文字程度）。必ず「以下の〜」で始まり、具体的な指示と出力形式を含めること"
+}
+
+promptExampleの要件：
+- 実際にコピペして使える完全なプロンプトにすること
+- 業種と部門に特化した具体的な内容にすること
+- 「以下の〜から〜を作成してください」という形式で始めること
+- 出力形式や条件を明確に指定すること`;
 
     // ユーザープロンプト
     const userPrompt = `業種: ${input.industry}
