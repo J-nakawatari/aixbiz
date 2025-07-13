@@ -6,9 +6,12 @@ export default function CTASection() {
     <section id="cta" className="py-16 px-4 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl mb-6 text-[32px] font-bold leading-[56px] md:leading-[56px]">
-          AI活用について相談してみたい方へ<br />
-          簡単な情報をご入力いただくと、後日こちらからご提案差し上げます。
+          <span className="text-yellow-300">AI活用について相談してみたい方へ</span>
         </h2>
+        <p className="text-lg md:text-xl mb-8 text-indigo-100 text-[24px]">
+          簡単な情報をご入力いただくと、<br />
+          後日こちらからご提案差し上げます。
+        </p>
         
         <Card className="bg-white text-gray-800 p-8 rounded-xl shadow-xl max-w-3xl mx-auto">
           <h3 className="text-2xl mb-6 text-center text-gray-800 text-[24px] font-bold">無料AI業務改善診断</h3>
