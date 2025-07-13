@@ -99,7 +99,7 @@ export default function DiagnosticSection() {
           
           <div className="space-y-4 mb-8">
             <div>
-              <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">業種</label>
+              <label className="block text-gray-700 mb-2 text-[16px] font-bold">業種</label>
               <select 
                 className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]"
                 value={formData.industry}
@@ -116,7 +116,7 @@ export default function DiagnosticSection() {
             </div>
             
             <div>
-              <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">部門・業務</label>
+              <label className="block text-gray-700 mb-2 text-[16px] font-bold">部門・業務</label>
               <select 
                 className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px] disabled:bg-gray-100 disabled:text-gray-500"
                 value={formData.jobFunction}
@@ -133,7 +133,7 @@ export default function DiagnosticSection() {
             </div>
             
             <div>
-              <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">課題（オプション）</label>
+              <label className="block text-gray-700 mb-2 text-[16px] font-bold">課題（オプション）</label>
               <textarea 
                 className="w-full p-3 border border-gray-300 rounded-lg h-20 resize-none text-[16px]"
                 placeholder="例：顧客からの問い合わせ対応に時間がかかる"
