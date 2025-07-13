@@ -3,6 +3,7 @@ import { Inter, Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import StructuredData from '@/components/StructuredData'
+import CSRFInitializer from '@/components/CSRFInitializer'
 
 const inter = Inter({ subsets: ['latin'] })
 const notoSansJP = Noto_Sans_JP({ 
@@ -73,6 +74,7 @@ export default function RootLayout({
       </head>
       <body className={`${notoSansJP.className} antialiased`}>
         <GoogleAnalytics />
+        <CSRFInitializer />
         {children}
       </body>
     </html>

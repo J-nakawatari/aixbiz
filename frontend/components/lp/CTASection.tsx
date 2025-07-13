@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Toast } from "../ui/toast";
+import { csrfManager } from "../../utils/csrf";
 
 interface FormData {
   companyName: string;
@@ -90,7 +91,7 @@ export default function CTASection() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await csrfManager.fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

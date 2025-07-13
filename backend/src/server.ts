@@ -9,6 +9,7 @@ import { configureSecurityMiddleware } from './config/security';
 import { globalRateLimiter } from './middlewares/rateLimiter';
 import { monitoringMiddleware } from './middlewares/monitoring';
 import { monitoringService } from './services/monitoringService';
+import { csrfProtection, initCSRFToken } from './middlewares/csrf';
 
 // 環境変数の読み込み
 dotenv.config();
@@ -32,6 +33,12 @@ app.use(globalRateLimiter);
 app.use(express.json({ limit: '10mb' })); // PDF生成のため増加
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
+// クッキーパーサー（CSRF用）
+app.use(require('cookie-parser')());
+
+// CSRF保護（POSTリクエストのみ）
+app.use(csrfProtection);
+
 // CORS設定
 app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
@@ -43,6 +50,9 @@ app.use(cors({
 app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
+
+// CSRFトークン初期化エンドポイント
+app.get('/api/csrf/token', initCSRFToken);
 
 // 統計情報エンドポイント（開発者のみ）
 app.get('/api/stats', (req, res) => {

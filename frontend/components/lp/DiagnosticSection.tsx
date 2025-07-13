@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Target } from "lucide-react";
+import { csrfManager } from "../../utils/csrf";
 
 // 業種ごとの部門・業務の定義
 const departmentsByIndustry: Record<string, string[]> = {
@@ -92,7 +93,7 @@ export default function DiagnosticSection() {
 
     try {
       // 相対URLを使用（同一オリジン）
-      const response = await fetch('/api/report/generate', {
+      const response = await csrfManager.fetch('/api/report/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
