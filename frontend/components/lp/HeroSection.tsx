@@ -50,9 +50,9 @@ export default function HeroSection() {
 
         {/* メインコンテンツ */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-[0px] items-center justify-center lg:justify-start px-4 sm:px-8 lg:px-16 mx-auto w-full relative z-20 py-12 sm:py-16 lg:py-[100px]" style={{ maxWidth: '90rem' }}>
-          {/* 背景画像をコンテンツエリア内に配置 */}
+          {/* 背景画像をコンテンツエリア内に配置 - PCのみ表示 */}
           <div 
-            className="absolute inset-0 bg-no-repeat bg-center sm:bg-right bg-contain pointer-events-none opacity-30 sm:opacity-50 lg:opacity-100"
+            className="hidden lg:block absolute inset-0 bg-no-repeat bg-right bg-contain pointer-events-none"
             style={{ backgroundImage: "url('/images/hero-img01.png')" }}
           />
           {/* 左側：テキストコンテンツ */}
