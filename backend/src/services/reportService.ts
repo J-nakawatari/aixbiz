@@ -188,9 +188,27 @@ export function generateHTMLReport(data: ReportData): string {
                 // レポートIDを取得（フッターから）
                 // デバッグ用
                 console.log('Searching for report ID in HTML...');
-                const reportIdMatch = htmlContent.match(/レポートID: (RPT-\d+)/);
-                const reportId = reportIdMatch ? reportIdMatch[1] : 'report';
+                
+                // 複数のパターンを試す
+                let reportId = 'report';
+                
+                // パターン1: レポートID: RPT-xxxxx
+                let match = htmlContent.match(/レポートID:\s*(RPT-\d+)/);
+                if (!match) {
+                    // パターン2: エスケープされたHTMLエンティティ
+                    match = htmlContent.match(/レポートID:\s*([^<&]+)/);
+                }
+                
+                if (match && match[1]) {
+                    reportId = match[1].trim();
+                }
+                
                 console.log('Extracted report ID:', reportId);
+                
+                // レポートIDが取得できない場合は、ウィンドウのタイトルやURLから取得を試みる
+                if (reportId === 'report') {
+                    console.error('Failed to extract report ID from HTML');
+                }
                 
                 // PDF生成APIを呼び出し（reportIdのみ送信）
                 const response = await fetch('https://aixbiz.jp/api/pdf/generate-pdf', {
