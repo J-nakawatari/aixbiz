@@ -56,9 +56,9 @@ export default function UseCasesSection() {
                   <Image
                     src={useCase.placeholderImage}
                     alt={`${useCase.industry}アイコン`}
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 mx-auto mb-3 object-cover rounded-lg"
+                    width={96}
+                    height={96}
+                    className="w-24 h-24 mx-auto mb-3 object-cover rounded-lg"
                   />
                   <h3 className="text-xl text-indigo-500 font-bold text-[24px]">{useCase.industry}</h3>
                 </div>
