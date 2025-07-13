@@ -179,13 +179,23 @@ export default function CTASection() {
                 メールアドレス <span className="text-red-500">*</span>
               </label>
               <input 
-                type="email" 
+                type="text" 
                 className={`w-full p-3 border rounded-lg text-[16px] ${
                   errors.email ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="your-email@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                onBlur={() => {
+                  if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+                    setErrors(prev => ({ ...prev, email: "有効なメールアドレスを入力してください" }));
+                  } else if (formData.email) {
+                    setErrors(prev => {
+                      const { email, ...rest } = prev;
+                      return rest;
+                    });
+                  }
+                }}
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1 text-left">{errors.email}</p>
