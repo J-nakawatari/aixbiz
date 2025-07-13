@@ -4,12 +4,32 @@ import Contact from '../models/Contact';
 // お問い合わせ一覧取得
 export const getContacts = async (req: Request, res: Response) => {
   try {
-    const { page = 1, limit = 20, status, sortBy = 'createdAt', order = 'desc' } = req.query;
+    const { page = 1, limit = 20, status, search, date, sortBy = 'createdAt', order = 'desc' } = req.query;
     
     // クエリ条件
     const query: any = {};
     if (status) {
       query.status = status;
+    }
+    
+    // 検索条件（会社名、担当者名）
+    if (search) {
+      query.$or = [
+        { companyName: { $regex: search, $options: 'i' } },
+        { contactName: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    // 日付フィルター（指定日の00:00:00から23:59:59まで）
+    if (date) {
+      const startDate = new Date(date as string);
+      const endDate = new Date(date as string);
+      endDate.setHours(23, 59, 59, 999);
+      
+      query.createdAt = {
+        $gte: startDate,
+        $lte: endDate
+      };
     }
 
     // ページネーション計算

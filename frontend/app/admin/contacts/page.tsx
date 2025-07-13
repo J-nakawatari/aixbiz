@@ -46,6 +46,8 @@ export default function ContactsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
+  const [dateFilter, setDateFilter] = useState('');
   const [pagination, setPagination] = useState({
     total: 0,
     page: 1,
@@ -55,7 +57,7 @@ export default function ContactsPage() {
 
   useEffect(() => {
     fetchContacts();
-  }, [currentPage, statusFilter]);
+  }, [currentPage, statusFilter, sortOrder, dateFilter]);
 
   const fetchContacts = async () => {
     try {
@@ -69,8 +71,11 @@ export default function ContactsPage() {
       const params = new URLSearchParams({
         page: currentPage.toString(),
         limit: '20',
+        sortBy: 'createdAt',
+        order: sortOrder,
         ...(statusFilter && { status: statusFilter }),
-        ...(searchTerm && { search: searchTerm })
+        ...(searchTerm && { search: searchTerm }),
+        ...(dateFilter && { date: dateFilter })
       });
 
       const response = await fetch(`/api/v1/admin/contacts?${params}`, {
@@ -148,30 +153,74 @@ export default function ContactsPage() {
 
       {/* Filters */}
       <Card className="p-4 bg-white">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="会社名、担当者名で検索..."
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      fetchContacts();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
               <input
-                type="text"
-                placeholder="会社名、担当者名で検索..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                type="date"
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
+                value={dateFilter}
+                onChange={(e) => {
+                  setDateFilter(e.target.value);
+                  setCurrentPage(1);
+                }}
               />
+              {dateFilter && (
+                <Button
+                  onClick={() => {
+                    setDateFilter('');
+                    setCurrentPage(1);
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="border-gray-300 text-gray-500 hover:bg-gray-50"
+                >
+                  ✕
+                </Button>
+              )}
             </div>
           </div>
           <div className="flex gap-2">
             <select
               className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base"
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                setCurrentPage(1);
+              }}
             >
               <option value="">全ステータス</option>
               <option value="unread">未読</option>
               <option value="read">既読</option>
               <option value="responded">対応済み</option>
             </select>
+            <Button
+              onClick={() => {
+                setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc');
+                setCurrentPage(1);
+              }}
+              variant="outline"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
+              {sortOrder === 'desc' ? '↓ 新しい順' : '↑ 古い順'}
+            </Button>
             <Button 
               onClick={fetchContacts}
               className="bg-indigo-600 hover:bg-indigo-700 text-white"
