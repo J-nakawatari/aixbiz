@@ -28,6 +28,7 @@ export default function DiagnosticSection() {
   const [reportHtml, setReportHtml] = useState("");
   const [error, setError] = useState("");
   const [availableDepartments, setAvailableDepartments] = useState<string[]>([]);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   // レポート表示関数（セキュア版）
   const displayReport = (html: string, reportId: string) => {
@@ -85,6 +86,60 @@ export default function DiagnosticSection() {
       setAvailableDepartments([]);
     }
   }, [formData.industry]);
+
+  // バリデーション関数
+  const validateField = (fieldName: string, value: string): string | null => {
+    // 危険な文字パターンのチェック
+    const dangerousPatterns = [
+      { pattern: /<script[\s\S]*?>/gi, message: 'スクリプトタグは使用できません' },
+      { pattern: /javascript:/gi, message: 'JavaScriptは使用できません' },
+      { pattern: /on\w+\s*=/gi, message: 'イベントハンドラは使用できません' },
+      { pattern: /<iframe/gi, message: 'iframeタグは使用できません' },
+      { pattern: /<object/gi, message: 'objectタグは使用できません' },
+      { pattern: /<embed/gi, message: 'embedタグは使用できません' }
+    ];
+
+    // 危険なパターンをチェック
+    for (const { pattern, message } of dangerousPatterns) {
+      if (pattern.test(value)) {
+        // 開発環境では警告のみ
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(`[Validation Warning] ${fieldName}: ${message}`);
+        }
+        return message;
+      }
+    }
+
+    // 文字数制限
+    const limits: Record<string, number> = {
+      industry: 100,
+      jobFunction: 100,
+      challenges: 1000,
+      companySize: 50
+    };
+
+    if (limits[fieldName] && value.length > limits[fieldName]) {
+      return `${limits[fieldName]}文字以内で入力してください`;
+    }
+
+    return null;
+  };
+
+  // フィールド変更時のバリデーション
+  const handleFieldChange = (fieldName: string, value: string) => {
+    setFormData(prev => ({ ...prev, [fieldName]: value }));
+    
+    // バリデーション実行
+    const error = validateField(fieldName, value);
+    setValidationErrors(prev => {
+      if (error) {
+        return { ...prev, [fieldName]: error };
+      } else {
+        const { [fieldName]: _, ...rest } = prev;
+        return rest;
+      }
+    });
+  };
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -144,9 +199,11 @@ export default function DiagnosticSection() {
             <div>
               <label className="block text-gray-700 mb-2 text-[16px] font-bold">業種</label>
               <select 
-                className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]"
+                className={`w-full p-3 pr-10 border rounded-lg bg-white text-[16px] ${
+                  validationErrors.industry ? 'border-red-500' : 'border-gray-300'
+                }`}
                 value={formData.industry}
-                onChange={(e) => setFormData({...formData, industry: e.target.value})}
+                onChange={(e) => handleFieldChange('industry', e.target.value)}
               >
                 <option value="">選択してください</option>
                 <option value="製造業">製造業</option>
@@ -156,14 +213,19 @@ export default function DiagnosticSection() {
                 <option value="小売業">小売業</option>
                 <option value="IT・Web">IT・Web</option>
               </select>
+              {validationErrors.industry && (
+                <p className="text-red-500 text-sm mt-1">{validationErrors.industry}</p>
+              )}
             </div>
             
             <div>
               <label className="block text-gray-700 mb-2 text-[16px] font-bold">部門・業務</label>
               <select 
-                className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px] disabled:bg-gray-100 disabled:text-gray-500"
+                className={`w-full p-3 pr-10 border rounded-lg bg-white text-[16px] disabled:bg-gray-100 disabled:text-gray-500 ${
+                  validationErrors.jobFunction ? 'border-red-500' : 'border-gray-300'
+                }`}
                 value={formData.jobFunction}
-                onChange={(e) => setFormData({...formData, jobFunction: e.target.value})}
+                onChange={(e) => handleFieldChange('jobFunction', e.target.value)}
                 disabled={!formData.industry || availableDepartments.length === 0}
               >
                 <option value="">
@@ -173,16 +235,35 @@ export default function DiagnosticSection() {
                   <option key={dept} value={dept}>{dept}</option>
                 ))}
               </select>
+              {validationErrors.jobFunction && (
+                <p className="text-red-500 text-sm mt-1">{validationErrors.jobFunction}</p>
+              )}
             </div>
             
             <div>
-              <label className="block text-gray-700 mb-2 text-[16px] font-bold">課題（オプション）</label>
+              <label className="block text-gray-700 mb-2 text-[16px] font-bold">
+                課題（オプション）
+                <span className="text-gray-500 text-sm font-normal ml-2">最大1000文字</span>
+              </label>
               <textarea 
-                className="w-full p-3 border border-gray-300 rounded-lg h-20 resize-none text-[16px]"
+                className={`w-full p-3 border rounded-lg h-20 resize-none text-[16px] ${
+                  validationErrors.challenges ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="例：顧客からの問い合わせ対応に時間がかかる"
                 value={formData.challenges}
-                onChange={(e) => setFormData({...formData, challenges: e.target.value})}
+                onChange={(e) => handleFieldChange('challenges', e.target.value)}
+                maxLength={1000}
               ></textarea>
+              <div className="flex justify-between items-center mt-1">
+                {validationErrors.challenges ? (
+                  <p className="text-red-500 text-sm">{validationErrors.challenges}</p>
+                ) : (
+                  <span></span>
+                )}
+                <span className="text-gray-500 text-sm">
+                  {formData.challenges.length}/1000
+                </span>
+              </div>
             </div>
           </div>
           

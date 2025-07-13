@@ -10,6 +10,8 @@ import { globalRateLimiter } from './middlewares/rateLimiter';
 import { monitoringMiddleware } from './middlewares/monitoring';
 import { monitoringService } from './services/monitoringService';
 import { csrfProtection, initCSRFToken } from './middlewares/csrf';
+import { logFeatureFlags } from './config/features';
+import { securityAudit, getSecurityStats } from './middlewares/securityAudit';
 
 // 環境変数の読み込み
 dotenv.config();
@@ -22,6 +24,9 @@ app.set('trust proxy', 1);
 
 // 監視ミドルウェア
 app.use(monitoringMiddleware);
+
+// セキュリティ監査ミドルウェア（早期に実行）
+app.use(securityAudit);
 
 // セキュリティミドルウェアの設定
 configureSecurityMiddleware(app);
@@ -64,7 +69,10 @@ app.get('/api/stats', (req, res) => {
     return res.status(403).json({ error: 'Forbidden' });
   }
   
-  res.json(monitoringService.getStats());
+  res.json({
+    monitoring: monitoringService.getStats(),
+    security: getSecurityStats()
+  });
 });
 
 // APIルート
@@ -99,4 +107,6 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 // サーバー起動
 app.listen(PORT, () => {
   console.log(`Backend server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
+  // 機能フラグの設定を表示
+  logFeatureFlags();
 });

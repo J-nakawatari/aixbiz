@@ -6,14 +6,16 @@ export const validateContactForm = [
     .notEmpty()
     .withMessage('会社名は必須です')
     .isLength({ max: 100 })
-    .withMessage('会社名は100文字以内で入力してください'),
+    .withMessage('会社名は100文字以内で入力してください')
+    .escape(),
 
   body('contactName')
     .trim()
     .notEmpty()
     .withMessage('ご担当者名は必須です')
     .isLength({ max: 50 })
-    .withMessage('ご担当者名は50文字以内で入力してください'),
+    .withMessage('ご担当者名は50文字以内で入力してください')
+    .escape(),
 
   body('email')
     .trim()
@@ -27,13 +29,15 @@ export const validateContactForm = [
     .notEmpty()
     .withMessage('業種を選択してください')
     .isIn(['製造業', '士業', '飲食業', '不動産', '小売業', 'IT・Web', 'その他'])
-    .withMessage('無効な業種が選択されています'),
+    .withMessage('無効な業種が選択されています')
+    .escape(),
 
   body('employeeCount')
     .notEmpty()
     .withMessage('従業員数を選択してください')
     .isIn(['1-5名', '6-20名', '21-50名', '51-100名', '101名以上'])
-    .withMessage('無効な従業員数が選択されています'),
+    .withMessage('無効な従業員数が選択されています')
+    .escape(),
 
   body('challenges')
     .isArray({ min: 1 })
@@ -49,4 +53,5 @@ export const validateContactForm = [
       '書類・文書作成の効率化'
     ])
     .withMessage('無効な業務課題が選択されています')
+    .escape()
 ];

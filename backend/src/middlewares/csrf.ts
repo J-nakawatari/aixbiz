@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
+import { featureFlags, isFeatureEnabled } from '../config/features';
 
 // CSRF設定
 const CSRF_CONFIG = {
@@ -10,8 +11,8 @@ const CSRF_CONFIG = {
     '/health',              // ヘルスチェック
     '/api/stats'            // 統計情報
   ],
-  // CSRF保護を無効化するフラグ（環境変数）
-  enabled: process.env.ENABLE_CSRF !== 'false',
+  // CSRF保護を無効化するフラグ（機能フラグ）
+  enabled: isFeatureEnabled('enableCSRF'),
   // 開発環境では警告のみ
   enforceInDev: false,
   // トークン長
