@@ -57,15 +57,14 @@ export function generateHTMLReport(data: ReportData): string {
     <title>AI業務改善診断レポート</title>
     <style>
         @page {
-            margin: 20mm;
+            margin: 5mm 10mm;
             size: A4;
         }
         body {
             font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
             line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             background-color: #f5f5f5;
         }
         .container {
