@@ -200,23 +200,8 @@ export function generateHTMLReport(data: ReportData): string {
                 
                 console.log('Extracted report ID:', reportId);
                 
-                // 親ウィンドウにメッセージを送信してPDFダウンロードを依頼
-                if (window.parent && window.parent !== window) {
-                    window.parent.postMessage({
-                        type: 'download-pdf',
-                        reportId: reportId
-                    }, '*');
-                    
-                    // ボタンを元に戻す
-                    setTimeout(() => {
-                        button.disabled = false;
-                        button.textContent = originalText;
-                    }, 2000);
-                    return;
-                }
-                
-                // 直接アクセスの場合（フォールバック）
-                const response = await fetch('/api/pdf/generate-pdf', {
+                // PDFダウンロード用の一時トークンを使用する方法（より安全）
+                const tokenResponse = await fetch('/api/pdf/download-token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -227,25 +212,14 @@ export function generateHTMLReport(data: ReportData): string {
                     credentials: 'include'
                 });
                 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('PDF API error:', response.status, errorText);
-                    throw new Error('PDF生成に失敗しました: ' + response.status);
+                if (!tokenResponse.ok) {
+                    throw new Error('トークン取得に失敗しました');
                 }
                 
-                // PDFをダウンロード
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'ai-report-' + reportId + '.pdf';
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                }, 100);
+                const { token } = await tokenResponse.json();
+                
+                // トークンを使用してPDFをダウンロード（CSRFトークン不要）
+                window.location.href = \`/api/pdf/download/\${reportId}?token=\${encodeURIComponent(token)}\`;
                 
             } catch (error) {
                 alert('PDF生成中にエラーが発生しました。もう一度お試しください。');

@@ -52,17 +52,6 @@ export default function DiagnosticSection() {
               body { margin: 0; padding: 0; font-family: sans-serif; }
               iframe { border: none; width: 100%; height: 100vh; }
             </style>
-            <script>
-              // PDFダウンロードのメッセージを親ウィンドウに転送
-              window.addEventListener('message', function(event) {
-                if (event.data && event.data.type === 'download-pdf') {
-                  // 親ウィンドウに転送
-                  if (window.opener) {
-                    window.opener.postMessage(event.data, '*');
-                  }
-                }
-              });
-            </script>
           </head>
           <body>
             <iframe 
@@ -76,53 +65,6 @@ export default function DiagnosticSection() {
         reportWindow.document.write(secureHtml);
         reportWindow.document.close();
         
-        // PDFダウンロードメッセージを処理
-        const messageHandler = async (event: MessageEvent) => {
-          // 同一オリジンのメッセージのみ処理
-          if (event.source !== reportWindow) return;
-          
-          if (event.data && event.data.type === 'download-pdf') {
-            const reportId = event.data.reportId;
-            console.log('Parent received PDF download request for:', reportId);
-            
-            try {
-              const response = await csrfManager.fetch('/api/pdf/generate-pdf', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  reportId: reportId
-                }),
-              });
-              
-              if (response.ok) {
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `AI活用診断レポート_${reportId}.pdf`;
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-                
-                // クリーンアップ
-                setTimeout(() => {
-                  window.URL.revokeObjectURL(url);
-                  document.body.removeChild(a);
-                }, 100);
-              } else {
-                console.error('PDF download failed:', response.status);
-                alert('PDFのダウンロードに失敗しました。しばらくしてから再度お試しください。');
-              }
-            } catch (error) {
-              console.error('PDF download error:', error);
-              alert('PDFのダウンロードに失敗しました。');
-            }
-          }
-        };
-        
-        window.addEventListener('message', messageHandler);
       }
     } else {
       // 既存実装（移行期間中の互換性のため）
