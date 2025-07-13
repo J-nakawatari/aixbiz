@@ -186,7 +186,7 @@ export function generateHTMLReport(data: ReportData): string {
                 const htmlContent = document.documentElement.outerHTML;
                 
                 // レポートIDを取得（フッターから）
-                const reportIdMatch = htmlContent.match(/レポートID: (.*?)</);
+                const reportIdMatch = htmlContent.match(/レポートID: ([^<]+)</);
                 const reportId = reportIdMatch ? reportIdMatch[1] : 'report';
                 
                 // PDF生成APIを呼び出し（reportIdのみ送信）
