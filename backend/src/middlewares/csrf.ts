@@ -9,8 +9,8 @@ const CSRF_CONFIG = {
     '/api/pdf/download',    // GETリクエストなので除外
     '/api/pdf/generate-pdf', // PDFダウンロード関連
     '/health',              // ヘルスチェック
-    '/api/stats',           // 統計情報
-    '/api/v1/admin/auth/login' // 管理者ログイン
+    '/api/stats'            // 統計情報
+    // TODO: 管理者ログインは適切なCSRF実装後に保護する
   ],
   // CSRF保護を無効化するフラグ（機能フラグ）
   enabled: isFeatureEnabled('enableCSRF'),
