@@ -9,8 +9,8 @@ export default function FeaturesSection() {
     },
     {
       icon: Rocket, 
-      title: "自社で\"すぐ始められる\"使い方やプロンプトも提案",
-      description: "診断結果には、すぐにコピー＆ペーストで使えるAIプロンプト例も含まれています。明日から使えます。"
+      title: "自社で\"すぐ始められる\"使い方もご提案",
+      description: "診断結果では、AIツールの活用方法をご提案します。プロンプトの書き方がわからない場合は、その書き方についてもご相談ください。"
     },
     {
       icon: ClipboardList,
