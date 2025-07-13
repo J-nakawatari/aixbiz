@@ -2,6 +2,10 @@ import OpenAI from 'openai';
 import { config } from '../config/config';
 
 // OpenAIクライアントの初期化
+if (!config.openaiApiKey) {
+  console.error('OPENAI_API_KEY is not set in environment variables');
+}
+
 const openai = new OpenAI({
   apiKey: config.openaiApiKey,
 });
@@ -32,6 +36,11 @@ interface ReportOutput {
 
 export async function generateAIReport(input: ReportInput): Promise<ReportOutput> {
   try {
+    // APIキーの確認
+    if (!config.openaiApiKey || config.openaiApiKey === '') {
+      throw new Error('OPENAI_API_KEY_MISSING');
+    }
+
     // システムプロンプト
     const systemPrompt = `あなたは中小企業向けのAI業務改善専門コンサルタントです。
 提供された業種・部門・課題に基づいて、AIを活用した具体的で実践的な業務改善提案を作成してください。
@@ -109,12 +118,16 @@ AI経験: ${input.aiExperience}
     // エラーメッセージをより詳細に
     let errorMessage = "申し訳ございません。レポート生成中にエラーが発生しました。";
     
-    if (error.code === 'invalid_api_key') {
+    if (error.message === 'OPENAI_API_KEY_MISSING') {
+      errorMessage = "OpenAI APIキーが設定されていません。管理者にお問い合わせください。";
+    } else if (error.code === 'invalid_api_key') {
       errorMessage = "APIキーの設定に問題があります。管理者にお問い合わせください。";
     } else if (error.status === 429) {
       errorMessage = "現在アクセスが集中しています。しばらく待ってから再度お試しください。";
     } else if (error.status === 401) {
       errorMessage = "認証エラーが発生しました。管理者にお問い合わせください。";
+    } else if (error.response?.data?.error?.message) {
+      errorMessage = `エラー: ${error.response.data.error.message}`;
     }
     
     return {
