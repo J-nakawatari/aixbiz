@@ -203,7 +203,7 @@ export function generateHTMLReport(data: ReportData): string {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('PDF API error:', response.status, errorText);
-                    throw new Error(`PDF生成に失敗しました: ${response.status}`);
+                    throw new Error('PDF生成に失敗しました: ' + response.status);
                 }
                 
                 // PDFをダウンロード
@@ -211,7 +211,7 @@ export function generateHTMLReport(data: ReportData): string {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = \`ai-report-\${reportId}.pdf\`;
+                a.download = 'ai-report-' + reportId + '.pdf';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
