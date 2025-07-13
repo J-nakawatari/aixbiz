@@ -21,3 +21,12 @@ docs/port-allocation.md
 # Development files
 docs/AI導入無料診断LP/
 docs/assets/
+
+# Deployment and setup files (contain sensitive configurations)
+setup-git-hooks.sh
+webhook-server.js
+webhook-server.service
+deploy.sh
+
+# Zone.Identifier files (Windows metadata)
+*.Zone.Identifier
