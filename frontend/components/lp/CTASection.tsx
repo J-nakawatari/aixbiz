@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
+import { Toast } from "../ui/toast";
 
 interface FormData {
   companyName: string;
@@ -34,6 +35,7 @@ export default function CTASection() {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
   // フォームが有効かチェック
   const isFormValid = 
@@ -97,7 +99,10 @@ export default function CTASection() {
       });
 
       if (response.ok) {
-        alert("お申し込みありがとうございます。後日担当者よりご連絡いたします。");
+        setToast({
+          message: "お申し込みありがとうございます。後日担当者よりご連絡いたします。",
+          type: "success"
+        });
         // フォームリセット
         setFormData({
           companyName: "",
@@ -109,10 +114,16 @@ export default function CTASection() {
         });
         setErrors({});
       } else {
-        alert("送信に失敗しました。お手数ですが、しばらくしてから再度お試しください。");
+        setToast({
+          message: "送信に失敗しました。お手数ですが、しばらくしてから再度お試しください。",
+          type: "error"
+        });
       }
     } catch (error) {
-      alert("送信に失敗しました。お手数ですが、しばらくしてから再度お試しください。");
+      setToast({
+        message: "送信に失敗しました。お手数ですが、しばらくしてから再度お試しください。",
+        type: "error"
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -133,8 +144,16 @@ export default function CTASection() {
   };
 
   return (
-    <section id="cta" className="py-16 px-4 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white">
-      <div className="max-w-4xl mx-auto text-center">
+    <>
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+      <section id="cta" className="py-16 px-4 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white">
+        <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl mb-6 text-[32px] font-bold leading-[56px] md:leading-[56px]">
           <span className="text-yellow-300">AI活用について相談してみたい方へ</span>
         </h2>
@@ -326,5 +345,6 @@ export default function CTASection() {
         </div>
       </div>
     </section>
+    </>
   );
 }
