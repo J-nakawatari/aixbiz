@@ -10,15 +10,13 @@ import {
   Settings, 
   LogOut, 
   Menu, 
-  X,
-  BarChart3
+  X
 } from 'lucide-react';
 
 const navigation = [
   { name: 'ダッシュボード', href: '/admin/dashboard', icon: Home },
   { name: 'お問い合わせ', href: '/admin/contacts', icon: MessageSquare },
   { name: '管理者管理', href: '/admin/users', icon: Users },
-  { name: '統計情報', href: '/admin/stats', icon: BarChart3 },
   { name: '設定', href: '/admin/settings', icon: Settings },
 ];
 
