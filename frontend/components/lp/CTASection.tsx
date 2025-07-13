@@ -35,6 +35,16 @@ export default function CTASection() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // フォームが有効かチェック
+  const isFormValid = 
+    formData.companyName.trim() !== "" &&
+    formData.contactName.trim() !== "" &&
+    formData.email.trim() !== "" &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+    formData.industry !== "" &&
+    formData.employeeCount !== "" &&
+    formData.challenges.length > 0;
+
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -294,8 +304,12 @@ export default function CTASection() {
             <Button 
               type="submit"
               size="lg" 
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 text-lg px-[21px] py-[24px] py-[32px] text-[24px] disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={isSubmitting}
+              className={`w-full text-white py-3 text-lg px-[21px] py-[24px] py-[32px] text-[24px] transition-all duration-200 ${
+                isFormValid && !isSubmitting
+                  ? 'bg-indigo-600 hover:bg-indigo-700 cursor-pointer' 
+                  : 'bg-gray-400 cursor-not-allowed'
+              }`}
+              disabled={!isFormValid || isSubmitting}
             >
               {isSubmitting ? "送信中..." : "AI導入の相談申し込み"}
             </Button>
