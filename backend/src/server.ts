@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import reportRoutes from './routes/reportRoutes';
+import pdfRoutes from './routes/pdfRoutes';
 import { config } from './config/config';
 import { configureSecurityMiddleware } from './config/security';
 import { globalRateLimiter } from './middlewares/rateLimiter';
@@ -57,6 +58,7 @@ app.get('/api/stats', (req, res) => {
 
 // APIルート
 app.use('/api/report', reportRoutes);
+app.use('/api/pdf', pdfRoutes);
 
 // 404ハンドリング
 app.use((req, res) => {

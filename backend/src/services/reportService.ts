@@ -173,18 +173,57 @@ export function generateHTMLReport(data: ReportData): string {
         }
     </style>
     <script>
-        function downloadPDF() {
-            // ボタンを一時的に非表示
+        async function downloadPDF() {
             const button = document.querySelector('.download-button');
-            button.style.display = 'none';
+            const originalText = button.textContent;
             
-            // 印刷ダイアログを開く
-            window.print();
-            
-            // ボタンを再表示
-            setTimeout(() => {
-                button.style.display = 'block';
-            }, 100);
+            try {
+                // ボタンを無効化してローディング表示
+                button.disabled = true;
+                button.textContent = 'PDF生成中...';
+                
+                // 現在のHTMLを取得
+                const htmlContent = document.documentElement.outerHTML;
+                
+                // レポートIDを取得（フッターから）
+                const reportIdMatch = htmlContent.match(/レポートID: (.*?)</);
+                const reportId = reportIdMatch ? reportIdMatch[1] : 'report';
+                
+                // PDF生成APIを呼び出し
+                const response = await fetch('/api/pdf/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        html: htmlContent,
+                        reportId: reportId
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('PDF生成に失敗しました');
+                }
+                
+                // PDFをダウンロード
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = \`ai-report-\${reportId}.pdf\`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+            } catch (error) {
+                alert('PDF生成中にエラーが発生しました。もう一度お試しください。');
+                console.error('PDF generation error:', error);
+            } finally {
+                // ボタンを元に戻す
+                button.disabled = false;
+                button.textContent = originalText;
+            }
         }
     </script>
 </head>
@@ -204,7 +243,7 @@ export function generateHTMLReport(data: ReportData): string {
 
         <h2>導入に向けたロードマップ</h2>
         <div class="implementation">
-            ${escapeHtml(data.implementation)}
+            ${data.implementation}
         </div>
 
         <button class="download-button" onclick="downloadPDF()">PDFをダウンロード</button>
