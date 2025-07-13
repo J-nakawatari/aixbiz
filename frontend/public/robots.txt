@@ -4,6 +4,7 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
+Disallow: /admin/
 
 # Sitemap
 Sitemap: https://aixbiz.jp/sitemap.xml
