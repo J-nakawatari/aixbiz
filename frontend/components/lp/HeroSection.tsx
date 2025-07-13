@@ -43,6 +43,12 @@ function ArrowIcon() {
 export default function HeroSection() {
   return (
     <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 min-h-[600px] lg:h-[600px] overflow-hidden mt-16 sm:mt-20">
+      {/* 背景画像 */}
+      <div 
+        className="absolute inset-0 bg-no-repeat bg-right bg-contain opacity-50"
+        style={{ backgroundImage: "url('/images/hero-img01.png')" }}
+      />
+      
       {/* メインコンテンツコンテナ */}
       <div className="flex flex-col items-center justify-start h-full relative">
         {/* 波の装飾 */}
@@ -89,17 +95,6 @@ export default function HeroSection() {
               無料で診断を受ける
               <ArrowIcon />
             </Button>
-          </div>
-
-          {/* 右側：画像 */}
-          <div className="w-full lg:w-[624px] h-[300px] sm:h-[400px] lg:h-[624px] flex-shrink-0 mt-8 lg:mt-0">
-            <ImageWithFallback
-              src="/images/hero-dashu.png"
-              alt="AI業務改善診断のイメージ - 女性がタブレットとデスクトップを使用する様子"
-              width={624}
-              height={624}
-              className="w-full h-full object-cover object-center rounded-lg"
-            />
           </div>
         </div>
       </div>
