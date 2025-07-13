@@ -79,6 +79,13 @@ jobs:
         sleep 5
         curl -f http://localhost:4000/health || exit 1
     
+    - name: Start frontend server
+      run: |
+        cd frontend
+        npm run dev &
+        sleep 10
+        curl -f http://localhost:3000 || exit 1
+    
     - name: Run integration tests
       run: |
         cd frontend
