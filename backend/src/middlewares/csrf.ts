@@ -14,7 +14,7 @@ const CSRF_CONFIG = {
   // CSRF保護を無効化するフラグ（機能フラグ）
   enabled: isFeatureEnabled('enableCSRF'),
   // 開発環境では警告のみ
-  enforceInDev: false,
+  enforceInDev: process.env.ENFORCE_CSRF_IN_TEST === 'true',
   // トークン長
   tokenLength: 32,
   // クッキー設定
