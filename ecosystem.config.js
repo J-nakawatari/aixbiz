@@ -23,8 +23,7 @@ module.exports = {
       cwd: './backend',
       env: {
         NODE_ENV: 'production',
-        PORT: 4004,
-        MONGODB_URI: 'mongodb://localhost:27020/aixbiz'
+        PORT: 4004
       },
       instances: 1,
       exec_mode: 'fork',
