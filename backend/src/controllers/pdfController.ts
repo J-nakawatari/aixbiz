@@ -42,7 +42,7 @@ export const generateReportPDF = async (req: Request, res: Response) => {
     // レスポンスヘッダー設定
     const filename = `ai-report-${reportId}.pdf`;
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`);
     res.setHeader('Content-Length', pdfBuffer.length.toString());
     
     // セキュリティヘッダー
