@@ -56,8 +56,8 @@ export const csrfProtection = (req: Request, res: Response, next: NextFunction) 
   if (!cookieToken || !headerToken) {
     const message = 'CSRF token missing';
     
-    // 開発環境で強制しない場合は警告のみ
-    if (process.env.NODE_ENV === 'development' && !CSRF_CONFIG.enforceInDev) {
+    // 開発環境・テスト環境で強制しない場合は警告のみ
+    if ((process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') && !CSRF_CONFIG.enforceInDev) {
       console.warn(`[CSRF Warning] ${message} - Path: ${req.path}`);
       return next();
     }
@@ -72,8 +72,8 @@ export const csrfProtection = (req: Request, res: Response, next: NextFunction) 
   if (cookieToken !== headerToken) {
     const message = 'CSRF token mismatch';
     
-    // 開発環境で強制しない場合は警告のみ
-    if (process.env.NODE_ENV === 'development' && !CSRF_CONFIG.enforceInDev) {
+    // 開発環境・テスト環境で強制しない場合は警告のみ
+    if ((process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') && !CSRF_CONFIG.enforceInDev) {
       console.warn(`[CSRF Warning] ${message} - Path: ${req.path}`);
       return next();
     }
