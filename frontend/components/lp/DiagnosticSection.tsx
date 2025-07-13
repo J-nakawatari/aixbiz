@@ -23,12 +23,8 @@ export default function DiagnosticSection() {
     setReportHtml("");
 
     try {
-      // 本番環境では自動的にhttps://aixbiz.jpを使用
-      const apiUrl = process.env.NODE_ENV === 'production' || window.location.hostname === 'aixbiz.jp' 
-        ? 'https://aixbiz.jp' 
-        : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000');
-      
-      const response = await fetch(`${apiUrl}/api/report/generate`, {
+      // 相対URLを使用（同一オリジン）
+      const response = await fetch('/api/report/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
