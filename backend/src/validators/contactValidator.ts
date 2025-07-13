@@ -50,8 +50,16 @@ export const validateContactForm = [
       '顧客対応の改善',
       'データ分析の強化',
       '社内コミュニケーション',
-      '書類・文書作成の効率化'
+      '書類・文書作成の効率化',
+      'その他'
     ])
     .withMessage('無効な業務課題が選択されています')
+    .escape(),
+
+  body('otherChallenge')
+    .optional()
+    .trim()
+    .isLength({ max: 500 })
+    .withMessage('その他の課題詳細は500文字以内で入力してください')
     .escape()
 ];

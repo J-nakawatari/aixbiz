@@ -8,6 +8,7 @@ export interface IContact extends Document {
   industry: string;
   employeeCount: string;
   challenges: string[];
+  otherChallenge?: string;
   message?: string;
   status: 'unread' | 'read' | 'responded';
   ipAddress?: string;
@@ -55,6 +56,11 @@ const ContactSchema: Schema = new Schema({
     type: String,
     trim: true
   }],
+  otherChallenge: {
+    type: String,
+    trim: true,
+    maxlength: 500
+  },
   message: {
     type: String,
     trim: true,

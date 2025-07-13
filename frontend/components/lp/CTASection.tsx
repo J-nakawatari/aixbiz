@@ -13,6 +13,7 @@ interface FormData {
   industry: string;
   employeeCount: string;
   challenges: string[];
+  otherChallenge?: string;
 }
 
 interface FormErrors {
@@ -31,7 +32,8 @@ export default function CTASection() {
     email: "",
     industry: "",
     employeeCount: "",
-    challenges: []
+    challenges: [],
+    otherChallenge: ""
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -111,7 +113,8 @@ export default function CTASection() {
           email: "",
           industry: "",
           employeeCount: "",
-          challenges: []
+          challenges: [],
+          otherChallenge: ""
         });
         setErrors({});
       } else {
@@ -292,7 +295,8 @@ export default function CTASection() {
                   "顧客対応の改善", 
                   "データ分析の強化",
                   "社内コミュニケーション",
-                  "書類・文書作成の効率化"
+                  "書類・文書作成の効率化",
+                  "その他"
                 ].map((task, index) => (
                   <label key={index} className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-gray-200 hover:border-indigo-300 transition-all duration-200 bg-white hover:bg-indigo-50">
                     <input 
@@ -318,6 +322,22 @@ export default function CTASection() {
               </div>
               {errors.challenges && (
                 <p className="text-red-500 text-sm mt-1 text-left">{errors.challenges}</p>
+              )}
+              
+              {/* その他を選択した場合のテキストエリア */}
+              {formData.challenges.includes("その他") && (
+                <div className="mt-4">
+                  <label className="block text-gray-700 mb-2 text-[16px] font-bold text-left">
+                    その他の課題詳細
+                  </label>
+                  <textarea
+                    className="w-full p-3 border border-gray-300 rounded-lg text-[16px] resize-none"
+                    rows={3}
+                    placeholder="具体的な課題をご記入ください"
+                    value={formData.otherChallenge}
+                    onChange={(e) => setFormData(prev => ({ ...prev, otherChallenge: e.target.value }))}
+                  />
+                </div>
               )}
             </div>
             

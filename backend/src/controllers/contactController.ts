@@ -21,6 +21,7 @@ export const submitContact = async (req: Request, res: Response) => {
       industry,
       employeeCount,
       challenges,
+      otherChallenge,
       message
     } = req.body;
 
@@ -37,6 +38,7 @@ export const submitContact = async (req: Request, res: Response) => {
       industry,
       employeeCount,
       challenges,
+      otherChallenge,
       message,
       ipAddress,
       userAgent

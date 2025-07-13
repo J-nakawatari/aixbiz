@@ -25,6 +25,7 @@ interface Contact {
   industry: string;
   employeeCount: string;
   challenges: string[];
+  otherChallenge?: string;
   status: 'unread' | 'read' | 'responded';
   createdAt: string;
   updatedAt: string;
@@ -251,6 +252,12 @@ export default function ContactDetailPage() {
               <span className="text-base">{challenge}</span>
             </div>
           ))}
+          {contact.otherChallenge && (
+            <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+              <p className="text-gray-600 text-base font-semibold mb-1">その他の課題詳細:</p>
+              <p className="text-base">{contact.otherChallenge}</p>
+            </div>
+          )}
         </div>
       </Card>
 
