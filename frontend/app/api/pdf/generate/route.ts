@@ -6,6 +6,7 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:4004';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    console.log('PDF generation request received:', body);
 
     // バックエンドのPDF生成APIへリクエストを転送
     const response = await fetch(`${BACKEND_API_URL}/api/pdf/generate-pdf`, {
@@ -21,8 +22,16 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      return NextResponse.json(errorData, { status: response.status });
+      console.error('Backend PDF API error:', response.status, response.statusText);
+      try {
+        const errorData = await response.json();
+        return NextResponse.json(errorData, { status: response.status });
+      } catch (e) {
+        return NextResponse.json(
+          { error: `Backend error: ${response.status} ${response.statusText}` },
+          { status: response.status }
+        );
+      }
     }
 
     // PDFデータを取得

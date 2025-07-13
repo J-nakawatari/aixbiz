@@ -201,7 +201,9 @@ export function generateHTMLReport(data: ReportData): string {
                 });
                 
                 if (!response.ok) {
-                    throw new Error('PDF生成に失敗しました');
+                    const errorText = await response.text();
+                    console.error('PDF API error:', response.status, errorText);
+                    throw new Error(`PDF生成に失敗しました: ${response.status}`);
                 }
                 
                 // PDFをダウンロード
