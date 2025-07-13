@@ -14,10 +14,18 @@ interface ReportInput {
   aiExperience: string;
 }
 
+interface Recommendation {
+  title: string;
+  description: string;
+  expectedEffect: string;
+  difficulty: string;
+  timeframe: string;
+}
+
 interface ReportOutput {
   summary: string;
-  recommendations: string[];
-  promptExample: string;
+  recommendations: Recommendation[];
+  implementation: string;
   reportId: string;
   generatedAt: string;
 }
@@ -25,20 +33,33 @@ interface ReportOutput {
 export async function generateAIReport(input: ReportInput): Promise<ReportOutput> {
   try {
     // システムプロンプト
-    const systemPrompt = `あなたは中小企業向けの業務改善アドバイザーです。業種・部門・課題などをもとに、ChatGPTなどの生成AIを活用した具体的な業務効率化の提案を行ってください。
+    const systemPrompt = `あなたは中小企業向けのAI業務改善専門コンサルタントです。
+提供された業種・部門・課題に基づいて、AIを活用した具体的で実践的な業務改善提案を作成してください。
 
 出力は必ず以下のJSON形式で返してください：
 {
-  "summary": "提案の概要（100文字程度）",
-  "recommendations": ["具体的な提案1", "具体的な提案2", "具体的な提案3"],
-  "promptExample": "ChatGPTで実際に使える具体的なプロンプト例（200-300文字程度）。必ず「以下の〜」で始まり、具体的な指示と出力形式を含めること"
+  "summary": "診断結果の概要（200-300文字）。現状の課題認識、AI導入による改善ポイント、期待される効果を含めて具体的に記述",
+  "recommendations": [
+    {
+      "title": "提案タイトル",
+      "description": "具体的な改善内容（100-150文字）",
+      "expectedEffect": "期待される効果（50-100文字）",
+      "difficulty": "導入難易度（低/中/高）",
+      "timeframe": "導入期間の目安"
+    }
+  ],
+  "implementation": "導入に向けた具体的なステップ（200-300文字）。優先順位、必要なリソース、注意点を含む"
 }
 
-promptExampleの要件：
-- 実際にコピペして使える完全なプロンプトにすること
-- 業種と部門に特化した具体的な内容にすること
-- 「以下の〜から〜を作成してください」という形式で始めること
-- 出力形式や条件を明確に指定すること`;
+提案は最低4つ、最大6つ作成してください。
+各提案は実現可能で具体的な内容にしてください。
+
+重要な指示：
+1. 「AIツール」のような抽象的な表現は避け、具体的なツール名（ChatGPT、Claude、Notion AI、DeepL、文字起こしツール等）を必ず記載
+2. 現在の作業時間と改善後の作業時間を数値で示す（例：「日報作成が30分→5分に短縮」）
+3. 具体的な業務フローの変化を説明（例：「手書きメモ→Excel転記→集計」が「音声入力→自動集計」に）
+4. 費用の目安も含める（月額○○円程度）
+5. 業種・部門に特化した具体例を使用`;
 
     // ユーザープロンプト
     const userPrompt = `業種: ${input.industry}
@@ -82,8 +103,8 @@ AI経験: ${input.aiExperience}
     // エラー時のフォールバック
     return {
       summary: "申し訳ございません。レポート生成中にエラーが発生しました。",
-      recommendations: ["しばらく時間をおいてから再度お試しください"],
-      promptExample: "",
+      recommendations: [],
+      implementation: "しばらく時間をおいてから再度お試しください。",
       reportId: `ERR-${Date.now()}`,
       generatedAt: new Date().toISOString()
     };

@@ -1,7 +1,15 @@
+interface Recommendation {
+  title: string;
+  description: string;
+  expectedEffect: string;
+  difficulty: string;
+  timeframe: string;
+}
+
 interface ReportData {
   summary: string;
-  recommendations: string[];
-  promptExample: string;
+  recommendations: Recommendation[];
+  implementation: string;
   reportId: string;
   generatedAt: string;
 }
@@ -20,10 +28,25 @@ export function generateHTMLReport(data: ReportData): string {
     return text.replace(/[&<>"'/]/g, (m) => map[m]);
   };
 
-  // 推奨事項のリストを生成
-  const recommendationsList = data.recommendations
-    .map(rec => `<li>${escapeHtml(rec)}</li>`)
-    .join('\n');
+  // 推奨事項のカードを生成
+  const recommendationsCards = data.recommendations
+    .map((rec, index) => `
+    <div class="recommendation-card">
+      <div class="recommendation-header">
+        <h3>${index + 1}. ${escapeHtml(rec.title)}</h3>
+        <span class="difficulty ${rec.difficulty}">${escapeHtml(rec.difficulty)}難易度</span>
+      </div>
+      <p class="description">${escapeHtml(rec.description)}</p>
+      <div class="meta">
+        <div class="effect">
+          <strong>期待効果:</strong> ${escapeHtml(rec.expectedEffect)}
+        </div>
+        <div class="timeframe">
+          <strong>導入期間:</strong> ${escapeHtml(rec.timeframe)}
+        </div>
+      </div>
+    </div>
+  `).join('\n');
 
   // シンプルなHTMLテンプレート
   const html = `<!DOCTYPE html>
@@ -63,24 +86,63 @@ export function generateHTMLReport(data: ReportData): string {
             margin: 20px 0;
         }
         .recommendations {
+            margin: 20px 0;
+        }
+        .recommendation-card {
             background-color: #f9fafb;
             padding: 20px;
-            border-radius: 5px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
         }
-        .recommendations ul {
+        .recommendation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .recommendation-header h3 {
+            color: #4f46e5;
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .difficulty {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .difficulty.低 {
+            background-color: #d1fae5;
+            color: #047857;
+        }
+        .difficulty.中 {
+            background-color: #fed7aa;
+            color: #c2410c;
+        }
+        .difficulty.高 {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        .description {
             margin: 10px 0;
-            padding-left: 25px;
+            line-height: 1.6;
         }
-        .recommendations li {
-            margin: 10px 0;
+        .meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.9em;
         }
-        .prompt-example {
-            background-color: #f3f4f6;
+        .implementation {
+            background-color: #f0f4ff;
             padding: 20px;
             border-radius: 5px;
-            border: 1px solid #e5e7eb;
-            font-family: monospace;
-            white-space: pre-wrap;
+            border-left: 4px solid #4f46e5;
+            margin: 20px 0;
         }
         .footer {
             text-align: center;
@@ -99,16 +161,14 @@ export function generateHTMLReport(data: ReportData): string {
             <p>${escapeHtml(data.summary)}</p>
         </div>
 
+        <h2>具体的な改善提案</h2>
         <div class="recommendations">
-            <h2>具体的な改善提案</h2>
-            <ul>
-                ${recommendationsList}
-            </ul>
+            ${recommendationsCards}
         </div>
 
-        <h2>ChatGPT活用例</h2>
-        <div class="prompt-example">
-${escapeHtml(data.promptExample)}
+        <h2>導入に向けたロードマップ</h2>
+        <div class="implementation">
+            ${escapeHtml(data.implementation)}
         </div>
 
         <div class="footer">
