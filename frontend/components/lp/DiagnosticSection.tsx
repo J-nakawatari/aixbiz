@@ -28,6 +28,52 @@ export default function DiagnosticSection() {
   const [error, setError] = useState("");
   const [availableDepartments, setAvailableDepartments] = useState<string[]>([]);
 
+  // レポート表示関数（セキュア版）
+  const displayReport = (html: string, reportId: string) => {
+    // 機能フラグで新旧切り替え
+    const useIframeMode = process.env.NEXT_PUBLIC_USE_IFRAME_MODE !== 'false';
+    
+    if (useIframeMode) {
+      // セキュアなiframe実装
+      const reportWindow = window.open('', '_blank');
+      if (reportWindow) {
+        // セキュリティヘッダーとスタイルを含むHTML
+        const secureHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="X-Content-Type-Options" content="nosniff">
+            <meta http-equiv="X-Frame-Options" content="DENY">
+            <title>AI活用診断レポート</title>
+            <style>
+              body { margin: 0; padding: 0; font-family: sans-serif; }
+              iframe { border: none; width: 100%; height: 100vh; }
+            </style>
+          </head>
+          <body>
+            <iframe 
+              srcdoc="${html.replace(/"/g, '&quot;')}"
+              sandbox="allow-same-origin allow-scripts allow-forms"
+              id="report-frame">
+            </iframe>
+          </body>
+          </html>
+        `;
+        reportWindow.document.write(secureHtml);
+        reportWindow.document.close();
+      }
+    } else {
+      // 既存実装（移行期間中の互換性のため）
+      const reportWindow = window.open('', '_blank');
+      if (reportWindow) {
+        reportWindow.document.write(html);
+        reportWindow.document.close();
+      }
+    }
+  };
+
   // 業種が変更されたときに部門・業務を更新
   useEffect(() => {
     if (formData.industry && departmentsByIndustry[formData.industry]) {
@@ -60,12 +106,8 @@ export default function DiagnosticSection() {
         throw new Error(data.error || 'レポート生成に失敗しました');
       }
 
-      // HTMLレポートを新しいウィンドウで開く
-      const reportWindow = window.open('', '_blank');
-      if (reportWindow) {
-        reportWindow.document.write(data.html);
-        reportWindow.document.close();
-      }
+      // セキュアな方法でレポートを表示
+      displayReport(data.html, data.data.reportId);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'エラーが発生しました');
     } finally {

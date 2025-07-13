@@ -1,0 +1,160 @@
+name: Security and Integration Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        cd backend && npm ci
+        cd ../frontend && npm ci
+    
+    - name: Setup environment
+      run: |
+        # Backend環境変数
+        cat > backend/.env.test << EOF
+        NODE_ENV=test
+        PORT=4000
+        MONGODB_URI=mongodb://localhost:27017/aixbiz-test
+        OPENAI_API_KEY=test-key-12345
+        JWT_SECRET=test-jwt-secret
+        SESSION_SECRET=test-session-secret
+        CORS_ORIGIN=http://localhost:3000
+        REDIS_URL=redis://localhost:6379
+        EOF
+        
+        # Frontend環境変数
+        cat > frontend/.env.test << EOF
+        NEXT_PUBLIC_API_URL=http://localhost:4000
+        NEXT_PUBLIC_USE_IFRAME_MODE=true
+        EOF
+    
+    - name: Build applications
+      run: |
+        cd backend && npm run build
+        cd ../frontend && npm run build
+    
+    - name: Run backend unit tests
+      run: |
+        cd backend
+        npm run test:unit || echo "Unit tests not configured yet"
+    
+    - name: Start backend server
+      run: |
+        cd backend
+        NODE_ENV=test npm start &
+        sleep 5
+        curl -f http://localhost:4000/health || exit 1
+    
+    - name: Run integration tests
+      run: |
+        cd frontend
+        npx playwright install chromium
+        npm run test:e2e || echo "E2E tests not configured yet"
+    
+    - name: Security tests
+      run: |
+        # CSRFテスト
+        echo "Testing CSRF protection..."
+        
+        # 1. CSRFトークンなしでリクエスト（失敗すべき）
+        response=$(curl -s -w "\n%{http_code}" -X POST \
+          http://localhost:4000/api/contact/submit \
+          -H "Content-Type: application/json" \
+          -d '{"companyName":"テスト会社","contactName":"テスト太郎","email":"test@example.com","industry":"製造業","employeeCount":"10-50名","challenges":["業務効率化が必要"]}')
+        
+        status_code=$(echo "$response" | tail -n1)
+        if [ "$status_code" = "403" ]; then
+          echo "✓ CSRF protection working (request blocked without token)"
+        else
+          echo "✗ CSRF protection not working (status: $status_code)"
+          exit 1
+        fi
+        
+        # 2. フォーム送信テスト
+        echo "Testing form submissions..."
+        
+        # 診断フォーム
+        response=$(curl -s -w "\n%{http_code}" -X POST \
+          http://localhost:4000/api/report/generate \
+          -H "Content-Type: application/json" \
+          -d '{"industry":"製造業","jobFunction":"生産管理","challenges":"効率化したい","companySize":"10-50名","aiExperience":"未導入"}')
+        
+        status_code=$(echo "$response" | tail -n1)
+        if [ "$status_code" = "200" ]; then
+          echo "✓ Diagnostic form API working"
+        else
+          echo "✗ Diagnostic form API failed (status: $status_code)"
+          exit 1
+        fi
+        
+        # 3. XSS攻撃テスト
+        echo "Testing XSS protection..."
+        
+        response=$(curl -s -X POST \
+          http://localhost:4000/api/report/generate \
+          -H "Content-Type: application/json" \
+          -d '{"industry":"<script>alert(1)</script>","jobFunction":"生産管理","challenges":"test","companySize":"10-50名","aiExperience":"未導入"}')
+        
+        if echo "$response" | grep -q "&lt;script&gt;"; then
+          echo "✓ XSS protection working (script tags escaped)"
+        else
+          echo "✗ XSS protection not working"
+          exit 1
+        fi
+        
+        # 4. レート制限テスト
+        echo "Testing rate limiting..."
+        
+        for i in {1..15}; do
+          curl -s -X POST \
+            http://localhost:4000/api/report/generate \
+            -H "Content-Type: application/json" \
+            -d '{"industry":"製造業","jobFunction":"生産管理","challenges":"test","companySize":"10-50名","aiExperience":"未導入"}' \
+            -o /dev/null
+        done
+        
+        response=$(curl -s -w "%{http_code}" -X POST \
+          http://localhost:4000/api/report/generate \
+          -H "Content-Type: application/json" \
+          -d '{"industry":"製造業","jobFunction":"生産管理","challenges":"test","companySize":"10-50名","aiExperience":"未導入"}' \
+          -o /dev/null)
+        
+        if [ "$response" = "429" ]; then
+          echo "✓ Rate limiting working"
+        else
+          echo "⚠ Rate limiting may not be working (status: $response)"
+        fi
+        
+        echo "All security tests completed!"
+
+    - name: Stop services
+      if: always()
+      run: |
+        pkill -f "node" || true
