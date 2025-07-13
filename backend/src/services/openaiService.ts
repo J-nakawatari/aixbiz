@@ -18,7 +18,8 @@ interface ReportOutput {
   summary: string;
   recommendations: string[];
   promptExample: string;
-  version: string;
+  reportId: string;
+  generatedAt: string;
 }
 
 export async function generateAIReport(input: ReportInput): Promise<ReportOutput> {
@@ -66,27 +67,25 @@ AI経験: ${input.aiExperience}
 
     const parsedResponse = JSON.parse(content);
     
-    // バージョン情報を追加（年.月.日形式）
-    const now = new Date();
-    const version = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+    // レポートIDを生成（タイムスタンプベース）
+    const timestamp = new Date().toISOString();
     
     return {
       ...parsedResponse,
-      version
+      reportId: `RPT-${Date.now()}`,
+      generatedAt: timestamp
     };
 
   } catch (error) {
     console.error('OpenAI API error:', error);
     
     // エラー時のフォールバック
-    const now = new Date();
-    const version = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
-    
     return {
       summary: "申し訳ございません。レポート生成中にエラーが発生しました。",
       recommendations: ["しばらく時間をおいてから再度お試しください"],
       promptExample: "",
-      version
+      reportId: `ERR-${Date.now()}`,
+      generatedAt: new Date().toISOString()
     };
   }
 }

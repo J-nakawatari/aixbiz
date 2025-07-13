@@ -2,7 +2,8 @@ interface ReportData {
   summary: string;
   recommendations: string[];
   promptExample: string;
-  version: string;
+  reportId: string;
+  generatedAt: string;
 }
 
 export function generateHTMLReport(data: ReportData): string {
@@ -112,8 +113,8 @@ ${escapeHtml(data.promptExample)}
 
         <div class="footer">
             <p>AI導入ナビゲーター by aixbiz</p>
-            <p>レポートバージョン: ${escapeHtml(data.version)}</p>
-            <p>生成日時: ${new Date().toLocaleString('ja-JP')}</p>
+            <p>レポートID: ${escapeHtml(data.reportId)}</p>
+            <p>生成日時: ${new Date(data.generatedAt).toLocaleString('ja-JP')}</p>
         </div>
     </div>
 </body>
