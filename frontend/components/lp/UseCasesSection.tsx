@@ -6,32 +6,32 @@ export default function UseCasesSection() {
     {
       industry: "製造業",
       examples: ["作業手順書の自動作成", "設備点検記録の要約", "品質管理レポートの分析"],
-      placeholderImage: "/images/placeholder-manufacturing.png"
+      placeholderImage: "/images/list-01.png"
     },
     {
       industry: "士業",
       examples: ["契約文書の要約", "メール返信の自動化", "法律文書のドラフト作成"],
-      placeholderImage: "/images/placeholder-professional.png"
+      placeholderImage: "/images/list-02.png"
     },
     {
       industry: "飲食業",
       examples: ["レシピ文書化", "外国語対応メニュー生成", "在庫管理の効率化"],
-      placeholderImage: "/images/placeholder-restaurant.png"
+      placeholderImage: "/images/list-03.png"
     },
     {
       industry: "不動産",
       examples: ["問い合わせ自動応答", "内見案内の自動返信", "物件説明文の生成"],
-      placeholderImage: "/images/placeholder-realestate.png"
+      placeholderImage: "/images/list-04.png"
     },
     {
       industry: "小売業", 
       examples: ["商品説明文の作成", "よくある質問の生成", "顧客レビューの分析"],
-      placeholderImage: "/images/placeholder-retail.png"
+      placeholderImage: "/images/list-05.png"
     },
     {
       industry: "IT・Web",
       examples: ["コード説明・改善提案", "マニュアル作成の効率化", "バグレポート分析"],
-      placeholderImage: "/images/placeholder-it.png"
+      placeholderImage: "/images/list-06.png"
     }
   ];
 
