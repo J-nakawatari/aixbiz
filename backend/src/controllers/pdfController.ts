@@ -14,7 +14,7 @@ export const pdfRateLimiter = rateLimit({
 
 export const generateReportPDF = async (req: Request, res: Response) => {
   try {
-    const { reportId } = req.body;
+    const { reportId, html } = req.body;
     
     // バリデーション
     if (!reportId || typeof reportId !== 'string') {
@@ -24,18 +24,26 @@ export const generateReportPDF = async (req: Request, res: Response) => {
       });
     }
     
-    // 保存されたレポートを取得
-    const storedReport = getReport(reportId);
-    if (!storedReport) {
-      return res.status(404).json({
-        success: false,
-        error: 'レポートが見つかりません。有効期限が切れた可能性があります。'
-      });
+    let htmlContent: string;
+    
+    // HTMLが送信されている場合はそれを使用
+    if (html && typeof html === 'string') {
+      htmlContent = html;
+    } else {
+      // 保存されたレポートを取得
+      const storedReport = getReport(reportId);
+      if (!storedReport) {
+        return res.status(404).json({
+          success: false,
+          error: 'レポートが見つかりません。有効期限が切れた可能性があります。'
+        });
+      }
+      htmlContent = storedReport.html;
     }
     
     // PDF生成
     const pdfBuffer = await generatePDF({
-      html: storedReport.html,
+      html: htmlContent,
       reportId
     });
     

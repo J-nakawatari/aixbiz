@@ -189,14 +189,15 @@ export function generateHTMLReport(data: ReportData): string {
                 const reportIdMatch = htmlContent.match(/レポートID: (.*?)</);
                 const reportId = reportIdMatch ? reportIdMatch[1] : 'report';
                 
-                // PDF生成APIを呼び出し（reportIdのみ送信）
+                // PDF生成APIを呼び出し（HTMLとreportIdを送信）
                 const response = await fetch('https://aixbiz.jp/api/pdf/generate-pdf', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        reportId: reportId
+                        reportId: reportId,
+                        html: htmlContent
                     })
                 });
                 
