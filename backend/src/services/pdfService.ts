@@ -51,7 +51,7 @@ export async function generatePDF(options: PDFGenerationOptions): Promise<Buffer
     
     // Puppeteerの起動（セキュアな設定）
     browser = await puppeteer.launch({
-      headless: 'new',
+      headless: true,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
@@ -101,7 +101,7 @@ export async function generatePDF(options: PDFGenerationOptions): Promise<Buffer
       throw new Error('生成されたPDFが最大サイズを超えています');
     }
     
-    return pdfBuffer;
+    return Buffer.from(pdfBuffer);
     
   } catch (error) {
     console.error('PDF generation error:', error);
