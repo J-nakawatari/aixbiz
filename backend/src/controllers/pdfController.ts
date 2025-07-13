@@ -14,6 +14,13 @@ export const pdfRateLimiter = rateLimit({
 
 export const generateReportPDF = async (req: Request, res: Response) => {
   try {
+    console.log('[PDF Controller] Request received:', {
+      method: req.method,
+      path: req.path,
+      body: req.body,
+      headers: req.headers
+    });
+    
     const { reportId } = req.body;
     
     // バリデーション

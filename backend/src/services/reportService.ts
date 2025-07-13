@@ -194,24 +194,37 @@ export function generateHTMLReport(data: ReportData): string {
                 button.disabled = true;
                 button.textContent = 'PDF生成中...';
                 
-                // 現在のHTMLを取得
-                const htmlContent = document.documentElement.outerHTML;
-                
                 // レポートIDを取得（DOM要素から直接取得）
                 const reportIdElement = document.getElementById('report-id');
                 const reportId = reportIdElement ? reportIdElement.textContent : 'report';
                 
                 console.log('Extracted report ID:', reportId);
                 
-                // PDF生成APIを呼び出し（reportIdのみ送信）
-                const response = await fetch('https://aixbiz.jp/api/pdf/generate-pdf', {
+                // 親ウィンドウにメッセージを送信してPDFダウンロードを依頼
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'download-pdf',
+                        reportId: reportId
+                    }, '*');
+                    
+                    // ボタンを元に戻す
+                    setTimeout(() => {
+                        button.disabled = false;
+                        button.textContent = originalText;
+                    }, 2000);
+                    return;
+                }
+                
+                // 直接アクセスの場合（フォールバック）
+                const response = await fetch('/api/pdf/generate-pdf', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         reportId: reportId
-                    })
+                    }),
+                    credentials: 'include'
                 });
                 
                 if (!response.ok) {
@@ -226,10 +239,13 @@ export function generateHTMLReport(data: ReportData): string {
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = 'ai-report-' + reportId + '.pdf';
+                a.style.display = 'none';
                 document.body.appendChild(a);
                 a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
                 
             } catch (error) {
                 alert('PDF生成中にエラーが発生しました。もう一度お試しください。');
