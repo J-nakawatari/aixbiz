@@ -36,7 +36,7 @@ export const configureSecurityMiddleware = (app: Express) => {
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"], // Tailwind CSS
         scriptSrc: isDevelopment 
           ? ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://www.googletagmanager.com"]
-          : ["'self'", "https://www.googletagmanager.com", (req, res) => `'nonce-${res.locals.nonce}'`],
+          : ["'self'", "https://www.googletagmanager.com"],
         imgSrc: ["'self'", "data:", "https:"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         connectSrc: ["'self'", process.env.CORS_ORIGIN || "http://localhost:3000"],

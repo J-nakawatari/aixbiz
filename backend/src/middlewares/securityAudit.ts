@@ -17,7 +17,7 @@ const SUSPICIOUS_PATTERNS = {
   ],
   pathTraversal: [
     /\.\.\//g,
-    /\.\.\\\/g,
+    /\.\.\\/g,
     /%2e%2e/gi
   ],
   commandInjection: [

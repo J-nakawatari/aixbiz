@@ -1,6 +1,6 @@
 import rateLimit from 'express-rate-limit';
 import { config } from '../config/config';
-import { featureFlags, isDeveloperIp } from '../config/features';
+import { featureFlags, isDeveloperIp as checkDeveloperIp } from '../config/features';
 
 // IPアドレスを取得するヘルパー関数
 const getClientIp = (req: any): string => {
