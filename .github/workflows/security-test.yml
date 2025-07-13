@@ -28,12 +28,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '20'
-        cache: 'npm'
     
-    - name: Install dependencies
-      run: |
-        cd backend && npm ci
-        cd ../frontend && npm ci
+    - name: Install backend dependencies
+      working-directory: ./backend
+      run: npm ci
+    
+    - name: Install frontend dependencies
+      working-directory: ./frontend
+      run: npm ci
     
     - name: Setup environment
       run: |
