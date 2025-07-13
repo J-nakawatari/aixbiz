@@ -7,7 +7,7 @@ export default function Logo() {
       alt="aixbiz"
       width={80}
       height={35}
-      className="h-9 w-auto"
+      className="h-[3.25rem] w-auto"
     />
   );
 }
