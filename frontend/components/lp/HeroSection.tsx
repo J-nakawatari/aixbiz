@@ -42,7 +42,21 @@ function ArrowIcon() {
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 min-h-[600px] lg:h-[600px] overflow-hidden mt-16 sm:mt-20">
+    <section className="relative min-h-[600px] lg:h-[600px] overflow-hidden mt-16 sm:mt-20">
+      {/* 背景動画 */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/videos/hero-movie.mp4" type="video/mp4" />
+      </video>
+      
+      {/* オーバーレイ */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/90 to-indigo-100/90"></div>
+      
       {/* メインコンテンツコンテナ */}
       <div className="flex flex-col items-center justify-start h-full relative">
         {/* 波の装飾 */}
