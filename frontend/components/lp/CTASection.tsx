@@ -14,7 +14,7 @@ export default function CTASection() {
         </p>
         
         <Card className="bg-white text-gray-800 p-8 rounded-xl shadow-xl max-w-3xl mx-auto">
-          <h3 className="text-2xl mb-6 text-center text-gray-800 text-[24px] font-bold">無料AI業務改善診断</h3>
+          <h3 className="text-2xl mb-6 text-center text-gray-800 text-[24px] font-bold">AI導入のご相談はこちらから</h3>
           
           <form className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -96,7 +96,7 @@ export default function CTASection() {
               size="lg" 
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 text-lg px-[21px] py-[24px] py-[32px] text-[24px]"
             >
-              無料診断を受ける
+              AI導入の相談申し込み
             </Button>
           </form>
         </Card>
