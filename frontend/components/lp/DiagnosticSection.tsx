@@ -1,8 +1,55 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Target } from "lucide-react";
 
 export default function DiagnosticSection() {
+  const [formData, setFormData] = useState({
+    industry: "",
+    jobFunction: "",
+    challenges: "",
+    companySize: "10-50名", // デフォルト値
+    aiExperience: "未導入" // デフォルト値
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [reportHtml, setReportHtml] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    setError("");
+    setReportHtml("");
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/report/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'レポート生成に失敗しました');
+      }
+
+      // HTMLレポートを新しいウィンドウで開く
+      const reportWindow = window.open('', '_blank');
+      if (reportWindow) {
+        reportWindow.document.write(data.html);
+        reportWindow.document.close();
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'エラーが発生しました');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section id="diagnosis" className="py-16 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="max-w-6xl mx-auto">
@@ -30,26 +77,34 @@ export default function DiagnosticSection() {
           <div className="space-y-4 mb-8">
             <div>
               <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">業種</label>
-              <select className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]">
-                <option>選択してください</option>
-                <option>製造業</option>
-                <option>士業</option>
-                <option>飲食業</option>
-                <option>不動産</option>
-                <option>小売業</option>
-                <option>IT・Web</option>
+              <select 
+                className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]"
+                value={formData.industry}
+                onChange={(e) => setFormData({...formData, industry: e.target.value})}
+              >
+                <option value="">選択してください</option>
+                <option value="製造業">製造業</option>
+                <option value="士業">士業</option>
+                <option value="飲食業">飲食業</option>
+                <option value="不動産">不動産</option>
+                <option value="小売業">小売業</option>
+                <option value="IT・Web">IT・Web</option>
               </select>
             </div>
             
             <div>
               <label className="block text-sm text-gray-700 mb-2 text-[16px] font-bold">部門・業務</label>
-              <select className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]">
-                <option>選択してください</option>
-                <option>営業・マーケティング</option>
-                <option>経理・総務</option>
-                <option>人事</option>
-                <option>カスタマーサポート</option>
-                <option>製造・生産</option>
+              <select 
+                className="w-full p-3 pr-10 border border-gray-300 rounded-lg bg-white text-[16px]"
+                value={formData.jobFunction}
+                onChange={(e) => setFormData({...formData, jobFunction: e.target.value})}
+              >
+                <option value="">選択してください</option>
+                <option value="営業・マーケティング">営業・マーケティング</option>
+                <option value="経理・総務">経理・総務</option>
+                <option value="人事">人事</option>
+                <option value="カスタマーサポート">カスタマーサポート</option>
+                <option value="製造・生産">製造・生産</option>
               </select>
             </div>
             
@@ -58,6 +113,8 @@ export default function DiagnosticSection() {
               <textarea 
                 className="w-full p-3 border border-gray-300 rounded-lg h-20 resize-none text-[16px]"
                 placeholder="例：顧客からの問い合わせ対応に時間がかかる"
+                value={formData.challenges}
+                onChange={(e) => setFormData({...formData, challenges: e.target.value})}
               ></textarea>
             </div>
           </div>
@@ -65,11 +122,19 @@ export default function DiagnosticSection() {
           <div className="text-center">
             <Button 
               size="lg" 
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 w-full text-[24px] px-[26px] py-[24px] px-[26px] py-[32px]"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 w-full text-[24px] px-[26px] py-[24px] px-[26px] py-[32px] disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={handleSubmit}
+              disabled={!formData.industry || !formData.jobFunction || isLoading}
             >
-              AI活用法を診断する
+              {isLoading ? "診断中..." : "AI活用法を診断する"}
             </Button>
           </div>
+          
+          {error && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+              {error}
+            </div>
+          )}
         </Card>
         
         <div className="mt-12 text-center">

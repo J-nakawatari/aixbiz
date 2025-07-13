@@ -1,0 +1,80 @@
+import OpenAI from 'openai';
+import { config } from '../config/config';
+
+// OpenAIクライアントの初期化
+const openai = new OpenAI({
+  apiKey: config.openaiApiKey,
+});
+
+interface ReportInput {
+  industry: string;
+  jobFunction: string;
+  challenges: string;
+  companySize: string;
+  aiExperience: string;
+}
+
+interface ReportOutput {
+  summary: string;
+  recommendations: string[];
+  promptExample: string;
+  version: string;
+}
+
+export async function generateAIReport(input: ReportInput): Promise<ReportOutput> {
+  try {
+    // システムプロンプト
+    const systemPrompt = `あなたは中小企業向けの業務改善アドバイザーです。業種・部門・課題などをもとに、ChatGPTなどの生成AIを活用した具体的な業務効率化の提案を行ってください。
+
+出力は必ず以下のJSON形式で返してください：
+{
+  "summary": "提案の概要（100文字程度）",
+  "recommendations": ["具体的な提案1", "具体的な提案2", "具体的な提案3"],
+  "promptExample": "ChatGPTで使えるプロンプト例"
+}`;
+
+    // ユーザープロンプト
+    const userPrompt = `業種: ${input.industry}
+部門: ${input.jobFunction}
+企業規模: ${input.companySize}
+AI経験: ${input.aiExperience}
+課題: ${input.challenges}`;
+
+    // OpenAI APIの呼び出し
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo", // コスト削減のためGPT-3.5を使用
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 1000,
+      response_format: { type: "json_object" } // JSON形式を強制
+    });
+
+    // レスポンスの解析
+    const content = completion.choices[0].message.content;
+    if (!content) {
+      throw new Error('OpenAI APIからの応答が空です');
+    }
+
+    const parsedResponse = JSON.parse(content);
+    
+    // バージョン情報を追加
+    return {
+      ...parsedResponse,
+      version: "2025.07"
+    };
+
+  } catch (error) {
+    console.error('OpenAI API error:', error);
+    
+    // エラー時のフォールバック
+    return {
+      summary: "申し訳ございません。レポート生成中にエラーが発生しました。",
+      recommendations: ["しばらく時間をおいてから再度お試しください"],
+      promptExample: "",
+      version: "2025.07"
+    };
+  }
+}
