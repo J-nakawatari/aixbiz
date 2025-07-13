@@ -1,15 +1,15 @@
 import { Router } from 'express';
 import { generateReport } from '../controllers/reportController';
 import { validateReportRequest } from '../validators/reportValidator';
-import { rateLimiter } from '../middlewares/rateLimiter';
+import { strictRateLimiter } from '../middlewares/rateLimiter';
 
 const router = Router();
 
 // レポート生成エンドポイント
-// レート制限: 1IPあたり1分間に5回まで
+// 厳格なレート制限: 15分間に10回まで（本番）または50回まで（開発）
 router.post(
   '/generate',
-  rateLimiter(5, 1), // 5 requests per 1 minute
+  strictRateLimiter,
   validateReportRequest,
   generateReport
 );
