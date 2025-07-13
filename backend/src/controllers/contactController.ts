@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import Contact from '../models/Contact';
+import { EmailService } from '../services/emailService';
 
 export const submitContact = async (req: Request, res: Response) => {
   try {
@@ -52,9 +53,13 @@ export const submitContact = async (req: Request, res: Response) => {
       companyName: contact.companyName
     });
 
-    // TODO: 実際の実装では以下を行う
-    // 1. 管理者へメール通知
-    // 2. 自動返信メール送信
+    // メール送信（非同期で実行し、エラーがあっても処理は続行）
+    Promise.all([
+      EmailService.sendContactConfirmation(contact),
+      EmailService.sendAdminNotification(contact)
+    ]).catch(error => {
+      console.error('Email sending error:', error);
+    });
 
     res.json({
       success: true,
