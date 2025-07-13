@@ -90,10 +90,10 @@ export async function generatePDF(options: PDFGenerationOptions): Promise<Buffer
       format: 'A4',
       printBackground: true,
       margin: {
-        top: '5mm',
-        right: '10mm',
-        bottom: '5mm',
-        left: '10mm'
+        top: '0',
+        right: '0',
+        bottom: '0',
+        left: '0'
       },
       displayHeaderFooter: false,
       preferCSSPageSize: true
