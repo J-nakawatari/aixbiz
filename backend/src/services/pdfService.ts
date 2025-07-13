@@ -76,11 +76,17 @@ export async function generatePDF(options: PDFGenerationOptions): Promise<Buffer
     // JavaScriptを無効化（セキュリティ対策）
     await page.setJavaScriptEnabled(false);
     
+    // 日本語フォントの読み込みを待つ
+    await page.evaluateHandle('document.fonts.ready');
+    
     // HTMLを設定
     await page.setContent(safeHtml, {
       waitUntil: 'networkidle0',
       timeout: PDF_GENERATION_TIMEOUT
     });
+    
+    // フォントの読み込みを確実に待つ
+    await page.waitForTimeout(1000);
     
     // PDFオプション
     const pdfBuffer = await page.pdf({
