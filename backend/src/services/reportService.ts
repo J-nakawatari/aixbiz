@@ -219,13 +219,19 @@ export function generateHTMLReport(data: ReportData): string {
                 const { token } = await tokenResponse.json();
                 
                 // トークンを使用してPDFをダウンロード（CSRFトークン不要）
+                button.textContent = 'ダウンロード中...';
                 window.location.href = \`/api/pdf/download/\${reportId}?token=\${encodeURIComponent(token)}\`;
+                
+                // 2秒後にボタンを元に戻す
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }, 2000);
                 
             } catch (error) {
                 alert('PDF生成中にエラーが発生しました。もう一度お試しください。');
                 console.error('PDF generation error:', error);
-            } finally {
-                // ボタンを元に戻す
+                // エラー時は即座にボタンを元に戻す
                 button.disabled = false;
                 button.textContent = originalText;
             }
