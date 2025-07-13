@@ -276,11 +276,6 @@ export default function DiagnosticSection() {
             >
               {isLoading ? "診断中..." : "AI活用法を診断する"}
             </Button>
-            <p className="text-sm text-gray-600 mt-3 text-[14px]">
-              診断結果では、AIツールの活用方法をご提案します。<br />
-              プロンプトの書き方がわからない場合は、<br />
-              その書き方についてもご相談ください。
-            </p>
           </div>
           
           {error && (
