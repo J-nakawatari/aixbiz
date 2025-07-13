@@ -20,18 +20,13 @@ export default function Footer() {
             <h3 className="text-[14px] text-white mb-4">サービス</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-[14px] text-slate-400 hover:text-white transition-colors">
-                  AI業務診断
+                <a href="#cta" className="text-[14px] text-slate-400 hover:text-white transition-colors">
+                  AI導入のご相談
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[14px] text-slate-400 hover:text-white transition-colors">
+                <a href="#industry-usage" className="text-[14px] text-slate-400 hover:text-white transition-colors">
                   活用事例
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-[14px] text-slate-400 hover:text-white transition-colors">
-                  コンサルティング
                 </a>
               </li>
             </ul>
