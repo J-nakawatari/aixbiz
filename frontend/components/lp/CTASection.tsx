@@ -269,8 +269,8 @@ export default function CTASection() {
                   onChange={(e) => setFormData(prev => ({ ...prev, employeeCount: e.target.value }))}
                 >
                   <option value="">選択してください</option>
-                  <option value="1-5名">1-5名</option>
-                  <option value="6-20名">6-20名</option>
+                  <option value="1-10名">1-10名</option>
+                  <option value="11-20名">11-20名</option>
                   <option value="21-50名">21-50名</option>
                   <option value="51-100名">51-100名</option>
                   <option value="101名以上">101名以上</option>

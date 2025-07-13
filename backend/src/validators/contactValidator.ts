@@ -35,7 +35,7 @@ export const validateContactForm = [
   body('employeeCount')
     .notEmpty()
     .withMessage('従業員数を選択してください')
-    .isIn(['1-5名', '6-20名', '21-50名', '51-100名', '101名以上'])
+    .isIn(['1-10名', '11-20名', '21-50名', '51-100名', '101名以上'])
     .withMessage('無効な従業員数が選択されています')
     .escape(),
 
