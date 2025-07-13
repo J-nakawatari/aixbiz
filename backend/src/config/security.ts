@@ -10,10 +10,13 @@ const generateNonce = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const configureSecurityMiddleware = (app: Express) => {
-  // 本番環境でHTTPS強制
+  // 本番環境でHTTPS強制（内部接続は除外）
   if (process.env.NODE_ENV === 'production') {
     app.use((req, res, next) => {
-      if (req.header('x-forwarded-proto') !== 'https') {
+      // 内部接続（localhost）はHTTPS強制しない
+      const isLocalhost = req.hostname === 'localhost' || req.hostname === '127.0.0.1';
+      
+      if (!isLocalhost && req.header('x-forwarded-proto') !== 'https') {
         res.redirect(`https://${req.header('host')}${req.url}`);
       } else {
         next();
