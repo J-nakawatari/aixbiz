@@ -222,11 +222,11 @@ export function generateHTMLReport(data: ReportData): string {
                 button.textContent = 'ダウンロード中...';
                 window.location.href = \`/api/pdf/download/\${reportId}?token=\${encodeURIComponent(token)}\`;
                 
-                // 2秒後にボタンを元に戻す
+                // 3秒後にボタンを元に戻す
                 setTimeout(() => {
                     button.disabled = false;
                     button.textContent = originalText;
-                }, 2000);
+                }, 3000);
                 
             } catch (error) {
                 alert('PDF生成中にエラーが発生しました。もう一度お試しください。');
