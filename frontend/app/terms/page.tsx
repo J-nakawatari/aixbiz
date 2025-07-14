@@ -40,12 +40,13 @@ export default function TermsPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">第3条（サービス内容）</h2>
               <p>本サービスは、以下の機能を提供します：</p>
               <ul className="list-disc pl-6 mt-2">
-                <li>AI活用診断の実施</li>
-                <li>診断結果に基づくレポートの生成・提供</li>
-                <li>AI活用に関する情報提供</li>
-                <li>お問い合わせ対応</li>
+                <li>AI活用診断の実施（無料）</li>
+                <li>診断結果に基づくレポートの生成・提供（無料）</li>
+                <li>AI活用に関する情報提供（無料）</li>
+                <li>お問い合わせ対応（無料）</li>
+                <li>AI導入コンサルティングサービス（有料）</li>
               </ul>
-              <p className="mt-2">本サービスは無料で提供されますが、将来的に有料オプションを追加する可能性があります。</p>
+              <p className="mt-2">診断レポートは無料でご利用いただけますが、実装支援やコンサルティングは有料サービスとなります。</p>
             </section>
 
             <section className="mb-8">

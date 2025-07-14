@@ -42,8 +42,9 @@ export default function LegalPage() {
 
               <div className="border-b pb-4">
                 <h2 className="text-lg font-bold text-gray-900">販売価格</h2>
-                <p className="mt-2">本サービスは現在無料で提供しております</p>
-                <p className="text-sm text-gray-600 mt-1">※将来的に有料オプションを追加する場合は、別途表示いたします</p>
+                <p className="mt-2">AI活用診断レポート: 無料</p>
+                <p className="mt-2">コンサルティングサービス: 個別見積り</p>
+                <p className="text-sm text-gray-600 mt-1">※詳細な料金については、お問い合わせください</p>
               </div>
 
               <div className="border-b pb-4">
@@ -53,12 +54,14 @@ export default function LegalPage() {
 
               <div className="border-b pb-4">
                 <h2 className="text-lg font-bold text-gray-900">サービス提供時期</h2>
-                <p className="mt-2">お申し込み後、即時</p>
+                <p className="mt-2">AI活用診断レポート: お申し込み後、即時</p>
+                <p className="mt-2">コンサルティングサービス: ご契約後、双方合意のスケジュールに従って提供</p>
               </div>
 
               <div className="border-b pb-4">
                 <h2 className="text-lg font-bold text-gray-900">お支払い方法</h2>
-                <p className="mt-2">現在、本サービスは無料のため該当なし</p>
+                <p className="mt-2">銀行振込（請求書発行後、翌月末払い）</p>
+                <p className="text-sm text-gray-600 mt-1">※コンサルティングサービスご利用時</p>
               </div>
 
               <div className="border-b pb-4">
