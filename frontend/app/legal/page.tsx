@@ -66,11 +66,10 @@ export default function LegalPage() {
 
               <div className="border-b pb-4">
                 <h2 className="text-lg font-bold text-gray-900">返品・キャンセルについて</h2>
-                <p className="mt-2">【診断レポート】</p>
-                <p className="mt-1">生成後のキャンセル・返金はお受けできません</p>
                 <p className="mt-2">【コンサルティングサービス】</p>
                 <p className="mt-1">契約締結前：キャンセル可能</p>
                 <p className="mt-1">契約締結後：契約条件に従います</p>
+                <p className="text-sm text-gray-600 mt-2">※診断レポートは無料のため、キャンセルの概念はありません</p>
               </div>
 
               <div className="border-b pb-4">
