@@ -4,6 +4,9 @@ import { IContact } from '../models/Contact';
 // SendGrid APIキーを設定
 if (process.env.SENDGRID_API_KEY) {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  console.log('SendGrid initialized with API key');
+} else {
+  console.error('SendGrid API key not found');
 }
 
 export class EmailService {
@@ -16,6 +19,13 @@ export class EmailService {
 
   // お問い合わせ受付確認メール
   static async sendContactConfirmation(contact: IContact): Promise<void> {
+    console.log('sendContactConfirmation called for:', contact.email);
+    console.log('Environment check:', {
+      NODE_ENV: process.env.NODE_ENV,
+      hasApiKey: !!process.env.SENDGRID_API_KEY,
+      disableEmail: process.env.DISABLE_EMAIL
+    });
+    
     if (!this.shouldSendEmail()) {
       console.log('Email sending skipped (test environment or no API key)');
       console.log('Would have sent email to:', contact.email);
@@ -34,10 +44,15 @@ export class EmailService {
     };
 
     try {
-      await sgMail.send(msg);
-      console.log('Contact confirmation email sent to:', contact.email);
-    } catch (error) {
+      console.log('Attempting to send email with SendGrid...');
+      const result = await sgMail.send(msg);
+      console.log('Contact confirmation email sent successfully to:', contact.email);
+      console.log('SendGrid response:', result);
+    } catch (error: any) {
       console.error('Error sending email:', error);
+      if (error.response) {
+        console.error('SendGrid error response:', error.response.body);
+      }
       // メール送信エラーでも処理は続行（エラーをスローしない）
     }
   }
