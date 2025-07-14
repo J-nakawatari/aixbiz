@@ -37,17 +37,17 @@ export default function Footer() {
             <h3 className="text-[14px] text-white mb-4">運営情報</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-[14px] text-slate-400 hover:text-white transition-colors">
-                  運営者情報
+                <a href="/legal" className="text-[14px] text-slate-400 hover:text-white transition-colors">
+                  特定商取引法に基づく表記
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[14px] text-slate-400 hover:text-white transition-colors">
+                <a href="/privacy" className="text-[14px] text-slate-400 hover:text-white transition-colors">
                   プライバシーポリシー
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[14px] text-slate-400 hover:text-white transition-colors">
+                <a href="/terms" className="text-[14px] text-slate-400 hover:text-white transition-colors">
                   利用規約
                 </a>
               </li>
