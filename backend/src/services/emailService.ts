@@ -36,7 +36,7 @@ export class EmailService {
       to: contact.email,
       from: {
         email: process.env.SENDGRID_FROM_EMAIL || 'noreply@aixbiz.jp',
-        name: 'AI導入ナビゲーター'
+        name: 'AI×Biz'
       },
       subject: 'お問い合わせありがとうございます',
       text: this.getContactConfirmationText(contact),
@@ -74,7 +74,7 @@ export class EmailService {
       to: adminEmail,
       from: {
         email: process.env.SENDGRID_FROM_EMAIL || 'noreply@aixbiz.jp',
-        name: 'AI導入ナビゲーター'
+        name: 'AI×Biz'
       },
       subject: `新規お問い合わせ: ${contact.companyName}`,
       text: this.getAdminNotificationText(contact),
@@ -94,7 +94,7 @@ export class EmailService {
     return `
 ${contact.contactName} 様
 
-この度は、AI導入ナビゲーターにお問い合わせいただき、誠にありがとうございます。
+この度は、AI×Bizにお問い合わせいただき、誠にありがとうございます。
 
 以下の内容でお問い合わせを承りました。
 
@@ -115,7 +115,7 @@ info@aixbiz.jp
 今後ともよろしくお願いいたします。
 
 ---
-AI導入ナビゲーター
+AI×Biz
 https://aixbiz.jp
 `;
   }
@@ -146,7 +146,7 @@ https://aixbiz.jp
     <div class="content">
       <p>${contact.contactName} 様</p>
       
-      <p>この度は、AI導入ナビゲーターにお問い合わせいただき、誠にありがとうございます。</p>
+      <p>この度は、AI×Bizにお問い合わせいただき、誠にありがとうございます。</p>
       
       <p>以下の内容でお問い合わせを承りました。</p>
       
@@ -191,7 +191,7 @@ https://aixbiz.jp
       <p>今後ともよろしくお願いいたします。</p>
     </div>
     <div class="footer">
-      <p>AI導入ナビゲーター<br>
+      <p>AI×Biz<br>
       <a href="https://aixbiz.jp">https://aixbiz.jp</a></p>
     </div>
   </div>
