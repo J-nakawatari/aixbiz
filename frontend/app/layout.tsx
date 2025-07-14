@@ -13,7 +13,7 @@ const notoSansJP = Noto_Sans_JP({
 })
 
 export const metadata: Metadata = {
-  title: 'AI導入ナビゲーター | 中小企業のためのAI業務改善診断サービス',
+  title: 'AI×Biz | 中小企業のためのAI業務改善診断サービス',
   description: '高額なシステムや複雑なAI導入は不要。ChatGPTなど、すぐに使えるAIを活かして御社の業務課題に合わせた効率化プランを診断・ご提案します。',
   keywords: 'AI導入,中小企業,業務改善,ChatGPT,AI診断,業務効率化,DX推進,生産性向上',
   icons: {
@@ -25,16 +25,16 @@ export const metadata: Metadata = {
     canonical: 'https://aixbiz.jp',
   },
   openGraph: {
-    title: 'AI導入ナビゲーター | 中小企業のためのAI業務改善診断サービス',
+    title: 'AI×Biz | 中小企業のためのAI業務改善診断サービス',
     description: '高額なシステムや複雑なAI導入は不要。無料診断で御社に最適なAI活用法をご提案します。',
     url: 'https://aixbiz.jp',
-    siteName: 'AI導入ナビゲーター',
+    siteName: 'AI×Biz',
     images: [
       {
         url: 'https://aixbiz.jp/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'AI導入ナビゲーター',
+        alt: 'AI×Biz',
       }
     ],
     locale: 'ja_JP',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI導入ナビゲーター | 中小企業のためのAI業務改善診断サービス',
+    title: 'AI×Biz | 中小企業のためのAI業務改善診断サービス',
     description: '高額なシステムや複雑なAI導入は不要。無料診断で御社に最適なAI活用法をご提案します。',
     images: ['https://aixbiz.jp/og-image.png'],
   },

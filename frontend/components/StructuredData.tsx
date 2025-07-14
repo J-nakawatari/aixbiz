@@ -2,7 +2,7 @@ export default function StructuredData() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "AI導入ナビゲーター",
+    "name": "AI×Biz",
     "alternateName": "aixbiz",
     "url": "https://aixbiz.jp",
     "logo": "https://aixbiz.jp/logo.png",
@@ -25,7 +25,7 @@ export default function StructuredData() {
     "name": "AI業務改善診断サービス",
     "provider": {
       "@type": "Organization",
-      "name": "AI導入ナビゲーター"
+      "name": "AI×Biz"
     },
     "description": "中小企業向けのAI導入・活用診断サービス。無料で業務改善のためのAI活用法をご提案します。",
     "areaServed": {

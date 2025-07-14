@@ -12,6 +12,7 @@ import {
   Menu, 
   X
 } from 'lucide-react';
+import Logo from '../lp/Logo';
 
 const navigation = [
   { name: 'ダッシュボード', href: '/admin/dashboard', icon: Home },
@@ -51,8 +52,8 @@ export default function AdminSidebar() {
       `}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center justify-center h-16 px-4 bg-indigo-600">
-            <h1 className="text-white text-xl font-bold">AI導入ナビ</h1>
+          <div className="flex items-center justify-center h-16 px-4 bg-white border-b border-gray-200">
+            <Logo />
           </div>
 
           {/* Navigation */}

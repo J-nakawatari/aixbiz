@@ -8,7 +8,7 @@ test('基本的な動作確認', async ({ page }) => {
     await page.goto('/');
     
     // ページタイトルの確認
-    await expect(page).toHaveTitle(/AI導入ナビゲーター/);
+    await expect(page).toHaveTitle(/AI×Biz/);
     
     // メインコンテンツが表示されているか
     const heroSection = page.locator('text=中小企業のための');

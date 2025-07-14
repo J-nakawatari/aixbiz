@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
             <Lock className="w-8 h-8 text-indigo-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-800 mb-2">管理画面ログイン</h1>
-          <p className="text-gray-600">AI導入ナビゲーター</p>
+          <p className="text-gray-600">AI×Biz</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

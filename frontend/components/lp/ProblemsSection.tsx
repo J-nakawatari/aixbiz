@@ -53,7 +53,7 @@ export default function ProblemsSection() {
         <div className="mt-12 p-6 bg-green-50 rounded-lg border border-green-200">
           <p className="text-lg text-green-800">
             <strong>安心してください！</strong><br />
-            これらの課題は、適切なAI導入ナビゲーションで解決できます
+            これらの課題は、AI×Bizで解決できます
           </p>
         </div>
       </div>

@@ -94,7 +94,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900">ダッシュボード</h1>
-        <p className="text-gray-600 mt-2">AI導入ナビゲーター管理画面へようこそ</p>
+        <p className="text-gray-600 mt-2">AI×Biz管理画面へようこそ</p>
       </div>
 
       {/* Stats Cards */}

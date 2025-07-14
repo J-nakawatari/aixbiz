@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'AI導入ナビゲーター 管理画面',
-  description: '管理画面',
+  title: 'AI×Biz 管理画面',
+  description: 'AI×Biz 管理画面',
   robots: 'noindex, nofollow',
 }
 

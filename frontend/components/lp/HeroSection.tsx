@@ -73,7 +73,7 @@ export default function HeroSection() {
             {/* サブタイトル */}
             <div className="text-xl sm:text-2xl text-gray-800 leading-relaxed w-full">
               <p className="text-[18px] sm:text-[20px] lg:text-[24px]">
-                AI導入ナビゲーターが<br />
+                AI×Bizが<br />
                 <span className="text-green-600">"いま必要な活用法"</span>を無料でご提案
               </p>
             </div>
