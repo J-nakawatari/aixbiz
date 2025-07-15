@@ -8,6 +8,8 @@ if (!config.openaiApiKey) {
 
 const openai = new OpenAI({
   apiKey: config.openaiApiKey,
+  timeout: 20000, // 20秒のタイムアウト
+  maxRetries: 2, // 最大2回リトライ
 });
 
 interface ReportInput {
