@@ -16,8 +16,6 @@ interface ReportInput {
   industry: string;
   jobFunction: string;
   challenges: string;
-  companySize: string;
-  aiExperience: string;
 }
 
 interface Recommendation {
@@ -72,12 +70,12 @@ export async function generateAIReport(input: ReportInput): Promise<ReportOutput
 4. 費用の目安も含める（月額○○円程度）
 5. 業種・部門に特化した具体例を使用`;
 
-    // ユーザープロンプト
+    // ユーザープロンプト（中小企業向けサービスとして固定値を内部で設定）
     const userPrompt = `業種: ${input.industry}
 部門: ${input.jobFunction}
-企業規模: ${input.companySize}
-AI経験: ${input.aiExperience}
-課題: ${input.challenges}`;
+企業規模: 中小企業（従業員50名以下）
+AI経験: 未導入または初歩的な利用
+課題: ${input.challenges || '特になし'}`;
 
     // OpenAI APIの呼び出し
     const completion = await openai.chat.completions.create({

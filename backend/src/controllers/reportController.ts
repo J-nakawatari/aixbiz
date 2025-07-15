@@ -15,7 +15,7 @@ export const generateReport = async (req: Request, res: Response) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { industry, jobFunction, challenges, companySize, aiExperience } = req.body;
+    const { industry, jobFunction, challenges } = req.body;
 
     // OpenAI APIを使用してレポートを生成
     console.log('Calling OpenAI API...');
@@ -23,9 +23,7 @@ export const generateReport = async (req: Request, res: Response) => {
     const reportData = await generateAIReport({
       industry,
       jobFunction,
-      challenges,
-      companySize,
-      aiExperience
+      challenges
     });
     console.log(`OpenAI API took: ${Date.now() - apiStartTime}ms`);
 
