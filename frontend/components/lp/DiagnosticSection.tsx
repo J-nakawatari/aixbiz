@@ -153,7 +153,11 @@ export default function DiagnosticSection() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          companySize: "10-50",    // 中小企業向けサービスなので固定
+          aiExperience: "未導入"   // デフォルト値
+        }),
       });
 
       const data = await response.json();
