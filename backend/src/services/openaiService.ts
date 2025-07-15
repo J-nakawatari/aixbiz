@@ -81,7 +81,7 @@ AI経験: ${input.aiExperience}
 
     // OpenAI APIの呼び出し
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // より高速なモデル
+      model: "gpt-4o-mini", // 品質とコストのバランスが良いモデル
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
