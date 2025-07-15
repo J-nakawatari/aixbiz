@@ -7,11 +7,19 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    // CSRFトークンとクッキーを取得
+    const csrfToken = request.headers.get('x-csrf-token');
+    const cookies = request.headers.get('cookie');
+
     // バックエンドAPIへリクエストを転送
     const response = await fetch(`${BACKEND_API_URL}/api/report/generate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        // CSRFトークンを転送
+        ...(csrfToken && { 'X-CSRF-Token': csrfToken }),
+        // クッキーを転送（CSRF検証用）
+        ...(cookies && { 'Cookie': cookies }),
         // クライアントのIPアドレスを転送（レート制限用）
         'X-Forwarded-For': request.headers.get('x-forwarded-for') || 
                            request.headers.get('x-real-ip') || 
